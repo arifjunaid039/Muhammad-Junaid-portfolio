@@ -95,16 +95,19 @@ header.site-nav.scrolled{ background:color-mix(in srgb, var(--bg) 88%, transpare
 .nav-logo{ display:flex; align-items:center; gap:8px; font-family:'Syne',sans-serif; font-weight:700; font-size:var(--fs-lg); }
 .nav-logo .mark{ display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:var(--r-md); background:linear-gradient(135deg,var(--primary),var(--accent)); color:#fff; font-size:var(--fs-base); }
 .nav-links{ display:none; align-items:center; gap:4px; list-style:none; }
-.nav-links a{ padding:9px 14px; border-radius:var(--r-md); font-size:var(--fs-base); font-weight:500; color:var(--muted); transition:.2s; }
+.nav-links a{ position:relative; display:block; padding:9px 14px; border-radius:var(--r-md); font-size:var(--fs-base); font-weight:500; color:var(--muted); transition:.2s; }
 .nav-links a:hover{ background:var(--bg-soft); color:var(--foreground); }
-.nav-links a.active{ color:var(--primary); background:color-mix(in srgb, var(--primary) 10%, transparent); }
-.mobile-menu a.active{ color:var(--primary); font-weight:700; }
+/* Audit r8 #3: the current section gets three cues (colour, tint AND an underline bar), so it's obvious on both themes */
+.nav-links a.active{ color:var(--primary); background:color-mix(in srgb, var(--primary) 12%, transparent); }
+.nav-links a.active::after{ content:''; position:absolute; left:14px; right:14px; bottom:4px; height:2px; border-radius:var(--r-pill); background:var(--primary); }
 .theme-toggle{ display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:var(--r-md); border:1px solid var(--border); background:var(--surface); color:var(--muted); margin-left:6px; flex-shrink:0; cursor:pointer; }
 .theme-toggle:hover{ color:var(--primary); border-color:var(--primary); }
 .nav-toggle{ display:inline-flex; border:1px solid var(--border); border-radius:var(--r-md); padding:8px; background:var(--surface); color:var(--foreground); flex-shrink:0; cursor:pointer; }
 .mobile-menu{ display:none; border-top:1px solid var(--border); background:var(--bg); padding:12px 24px; }
 .mobile-menu.open{ display:block; }
-.mobile-menu a{ display:block; padding:10px 0; color:var(--muted); font-size:var(--fs-base); font-weight:500; }
+.mobile-menu a{ display:block; padding:10px 12px; border-radius:var(--r-md); color:var(--muted); font-size:var(--fs-base); font-weight:500; }
+/* Audit r8 #3: same idea in the mobile menu, a bar on the left plus a tint */
+.mobile-menu a.active{ color:var(--primary); font-weight:700; background:color-mix(in srgb, var(--primary) 12%, transparent); box-shadow:inset 3px 0 0 var(--primary); }
 .nav-right{ display:flex; align-items:center; gap:8px; }
 @media(min-width:900px){ .nav-links{ display:flex; } .nav-toggle{ display:none; } }
 @media(max-width:420px){ .nav-logo{ font-size:var(--fs-md); } .nav-inner{ padding:16px; } }
@@ -114,23 +117,23 @@ header.site-nav.scrolled{ background:color-mix(in srgb, var(--bg) 88%, transpare
 @media(max-width:640px){ .hero{ padding:112px 0 8px; } }
 .hero-glow{ position:absolute; top:-220px; right:-160px; width:560px; height:560px; border-radius:50%; opacity:.18; filter:blur(100px); background:linear-gradient(135deg,var(--primary),var(--accent)); pointer-events:none; }
 .hero-grid{ position:relative; display:flex; flex-direction:column; align-items:center; gap:28px; text-align:center; max-width:720px; margin:0 auto; }
-.badge-pill{ display:inline-flex; align-items:center; gap:8px; border:1px solid var(--border); background:var(--surface); border-radius:var(--r-pill); padding:7px 16px; font-size:var(--fs-sm); font-weight:500; color:var(--primary); }
+.badge-pill{ display:inline-flex; align-items:center; gap:8px; max-width:100%; text-align:center; line-height:1.4; border:1px solid var(--border); background:var(--surface); border-radius:var(--r-pill); padding:7px 16px; font-size:var(--fs-sm); font-weight:500; color:var(--primary); }
 .badge-pill .dot{ width:7px; height:7px; border-radius:50%; background:var(--success); }
 /* Fix 2: more breathing room between the status badge and the H1 */
-.hero h1{ font-size:var(--fs-2xl); margin-top:32px; line-height:1.1; font-weight:800; word-break:break-word; }
+.hero h1{ font-size:var(--fs-2xl); margin-top:0; line-height:1.1; font-weight:800; word-break:break-word; }
 @media(min-width:480px){ .hero h1{ font-size:var(--fs-3xl); } }
 @media(min-width:640px){ .hero h1{ font-size:var(--fs-4xl); } }
 .hero .role{ margin-top:10px; font-size:var(--fs-md); font-weight:600; color:var(--muted); }
 @media(min-width:640px){ .hero .role{ font-size:var(--fs-lg); } }
 /* Audit r4 #3: location + project count now live in the text block, right under the role, instead of floating at the corners of the portrait */
-.hero-meta{ margin-top:14px; display:flex; flex-wrap:wrap; justify-content:center; gap:6px 20px; font-size:var(--fs-base); font-weight:500; color:var(--muted); }
+.hero-meta{ margin-top:14px; display:flex; flex-wrap:wrap; justify-content:center; gap:6px 20px; font-size:var(--fs-md); font-weight:500; color:var(--muted); }
 .hero-meta span{ display:inline-flex; align-items:center; gap:8px; }
 .hero-meta i{ color:var(--primary); }
-.hero-desc{ margin-top:20px; max-width:560px; margin-left:auto; margin-right:auto; color:var(--muted); font-size:var(--fs-base); line-height:1.7; }
-@media(min-width:640px){ .hero-desc{ font-size:var(--fs-md); } }
+.hero-desc{ margin-top:20px; max-width:620px; margin-left:auto; margin-right:auto; color:var(--muted); font-size:var(--fs-md); line-height:1.7; }
+@media(min-width:640px){ .hero-desc{ font-size:var(--fs-lg); } }
 .hero-desc b{ color:var(--foreground); font-weight:600; }
 /* Audit r3 #4/#12/#13: the two links get a real gap from the buttons (24px, the same rhythm as the rest of the hero) and full-strength text, so they read as their own group */
-.hero-actions{ margin-top:28px; }
+.hero-actions{ margin-top:28px; display:flex; flex-direction:column; align-items:center; gap:18px; max-width:100%; }
 .hero-cta{ display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:12px; }
 .hero-cta .btn{ width:100%; }
 @media(min-width:480px){
@@ -143,12 +146,13 @@ header.site-nav.scrolled{ background:color-mix(in srgb, var(--bg) 88%, transpare
 /* Audit r7 #4: the "Currently" status card is gone; that content now lives in the hero-desc paragraph.
    The portrait area only ever shows the headshot (once assets/junaid.jpg exists). */
 .portrait-frame[hidden]{ display:none; }
-/* Fixes 4 & 7 + Audit r3 #9: a bigger pill-shaped scroll cue with a visible border, still clear of the hero buttons */
+/* Audit r9 #1: the scroll cue is now a small borderless text link (no pill, no border, no shadow), so View Projects is the only heavy element in the hero.
+   Only the little chevron bounces. */
 .scroll-cue{ display:flex; justify-content:center; }
-.scroll-indicator{ position:relative; z-index:2; margin-top:40px; display:inline-flex; align-items:center; gap:10px; width:fit-content; padding:13px 24px; border:1.5px solid var(--border-strong); border-radius:var(--r-pill); background:var(--surface); color:var(--foreground); font-size:var(--fs-md); font-weight:700; box-shadow:var(--shadow); animation:bounce 2.2s ease-in-out infinite; }
-@media(max-width:640px){ .scroll-indicator{ margin-top:32px; } }
-.scroll-indicator i{ font-size:var(--fs-lg); color:var(--primary); }
-@keyframes bounce{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(8px); } }
+.scroll-indicator{ position:relative; z-index:2; margin-top:32px; display:inline-flex; align-items:center; gap:8px; width:fit-content; padding:8px 12px; color:var(--foreground); font-size:var(--fs-base); font-weight:700; transition:color .2s ease; }
+.scroll-indicator:hover{ color:var(--primary); }
+.scroll-indicator i{ font-size:var(--fs-lg); color:var(--primary); animation:bounce 2.2s ease-in-out infinite; }
+@keyframes bounce{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(5px); } }
 
 /* Sections */
 section{ padding:70px 0; }
@@ -157,8 +161,10 @@ section{ padding:70px 0; }
 .section-heading h2{ margin-top:12px; font-size:var(--fs-xl); }
 @media(min-width:480px){ .section-heading h2{ font-size:var(--fs-2xl); } }
 @media(min-width:640px){ .section-heading h2{ font-size:var(--fs-3xl); } }
-.section-heading p{ margin-top:16px; color:var(--muted); font-size:var(--fs-base); line-height:1.7; }
-@media(min-width:640px){ .section-heading p{ font-size:var(--fs-md); } }
+.section-heading p{ margin-top:16px; color:var(--muted); font-size:var(--fs-md); line-height:1.7; }
+@media(min-width:640px){ .section-heading p{ font-size:var(--fs-lg); } }
+/* the eyebrow is also a <p>, so it keeps its own size and spacing */
+.section-heading p.eyebrow{ margin-top:0; font-size:var(--fs-sm); line-height:1.4; }
 
 #about{ padding-top:40px; }
 @media(min-width:768px){ #about{ padding-top:56px; } }
@@ -177,8 +183,8 @@ section{ padding:70px 0; }
 /* Audit r4 #4: the second "JA" monogram is gone. The photo (if you add one) now lives in the hero, so About is just the text, at a readable line length */
 .about-copy{ margin:40px auto 0; max-width:720px; }
 @media(min-width:768px){ .about-copy{ margin-top:48px; } }
-.about-copy p{ font-size:var(--fs-base); color:var(--muted); line-height:1.8; margin-bottom:16px; }
-@media(min-width:640px){ .about-copy p{ font-size:var(--fs-md); } }
+.about-copy p{ font-size:var(--fs-md); color:var(--muted); line-height:1.8; margin-bottom:18px; }
+@media(min-width:640px){ .about-copy p{ font-size:var(--fs-lg); } }
 .about-copy p:last-child{ margin-bottom:0; }
 .about-copy b{ color:var(--foreground); font-weight:700; }
 /* Audit r3 #10: more air between the paragraph block and the stat cards */
@@ -188,23 +194,31 @@ section{ padding:70px 0; }
 .stat-card{ padding:22px; text-align:center; }
 @media(min-width:640px){ .stat-card{ padding:28px; } }
 .stat-value{ font-size:var(--fs-2xl); font-weight:800; font-family:'Syne',sans-serif; }
-.stat-label{ margin-top:6px; font-size:var(--fs-base); color:var(--muted); font-weight:500; }
+.stat-label{ margin-top:6px; font-size:var(--fs-md); color:var(--muted); font-weight:500; }
 
 /* Skills */
-/* Fix 3 + Audit #4: every row is the same height (grid-auto-rows) and each card fills it, so the bottom edge is always clean */
+/* Fix 3 + Audit #4 + Audit r8 #4: every row is the same height (grid-auto-rows) and each card fills it, so the bottom edge is always clean.
+   Between 640px and 1039px the 5 cards sit on a 6-column track (3 on top, 2 wider below), so there is never a lone card in a row. */
 .skills-groups{ margin-top:40px; display:grid; gap:var(--grid-gap); grid-template-columns:1fr; grid-auto-rows:1fr; align-items:stretch; }
 @media(min-width:768px){ .skills-groups{ margin-top:48px; } }
-@media(min-width:640px){ .skills-groups{ grid-template-columns:1fr 1fr; } }
-@media(min-width:1040px){ .skills-groups{ grid-template-columns:repeat(5,1fr); } }
-.skill-group{ padding:22px; display:flex; flex-direction:column; align-items:stretch; align-self:stretch; }
-@media(min-width:640px){ .skill-group{ padding:26px; } }
+@media(min-width:640px){
+  .skills-groups{ grid-template-columns:repeat(6,1fr); }
+  .skill-group{ grid-column:span 2; }
+  .skill-group:nth-child(n+4){ grid-column:span 3; }
+}
+@media(min-width:1040px){
+  .skills-groups{ grid-template-columns:repeat(5,1fr); }
+  .skill-group, .skill-group:nth-child(n+4){ grid-column:auto; }
+}
+.skill-group{ padding:26px; display:flex; flex-direction:column; align-items:stretch; align-self:stretch; height:100%; }
+@media(min-width:640px){ .skill-group{ padding:30px; } }
 /* Audit r6 #3: same icon treatment as .service-icon, so Skills and Services read as one design system */
 .skill-icon{ width:40px; height:40px; display:inline-flex; align-items:center; justify-content:center; border-radius:var(--r-md); background:color-mix(in srgb, var(--primary) 12%, transparent); color:var(--primary); font-size:var(--fs-md); margin-bottom:12px; }
 .skill-group h3{ font-size:var(--fs-md); font-weight:700; color:var(--primary); }
 /* Fix 9 + Audit #1/#5: one left-aligned wrapping layout with a fixed gap; the tag's own edge lines up with the heading */
-.skill-tags{ flex:1; align-content:flex-start; justify-content:flex-start; list-style:none; margin-top:16px; padding:0; display:flex; flex-wrap:wrap; row-gap:12px; column-gap:8px; }
+.skill-tags{ flex:1; align-content:flex-start; justify-content:flex-start; list-style:none; margin-top:16px; padding:0; display:flex; flex-wrap:wrap; row-gap:12px; column-gap:10px; }
 /* Fix 8 + Audit #1/#5: soft fill makes every tag's edges visible. Audit r3 #17: the repeated check icons are gone, so the tags are just clean labels */
-.skill-tags li{ display:inline-flex; align-items:center; background:var(--bg-soft); border:1px solid var(--border); border-radius:var(--r-md); padding:6px 12px; font-size:var(--fs-sm); font-weight:500; color:var(--muted); white-space:nowrap; }
+.skill-tags li{ display:inline-flex; align-items:center; background:var(--bg-soft); border:1px solid var(--border); border-radius:var(--r-md); padding:8px 14px; font-size:var(--fs-sm); font-weight:500; color:var(--muted); white-space:nowrap; }
 
 /* Services */
 /* Audit r3 #5: equal row heights, same technique as the skills grid */
@@ -218,12 +232,12 @@ section{ padding:70px 0; }
 /* Audit r6 #5: min-height reserves room for a 2-line title, so 1-line titles still start their
    description at the same y-position as the card that wraps */
 .service-card h3{ font-size:var(--fs-md); line-height:1.3; min-height:calc(1.3em * 2); display:flex; align-items:flex-start; }
-.service-card p{ margin-top:8px; font-size:var(--fs-base); color:var(--muted); line-height:1.6; }
+.service-card p{ margin-top:8px; font-size:var(--fs-md); color:var(--muted); line-height:1.65; }
 
 /* Projects */
+/* Audit r8 #1: the 2-column grid starts at 768px (same as Leadership), so four cards are always a tidy 2x2 or a single stack, never an orphan */
 .projects-grid{ margin-top:40px; display:grid; gap:var(--grid-gap); grid-template-columns:1fr; }
-@media(min-width:768px){ .projects-grid{ margin-top:48px; } }
-@media(min-width:960px){ .projects-grid{ grid-template-columns:1fr 1fr; } }
+@media(min-width:768px){ .projects-grid{ margin-top:48px; grid-template-columns:1fr 1fr; } }
 .project-card{ overflow:hidden; display:flex; flex-direction:column; }
 .project-media{ position:relative; aspect-ratio:16/9; overflow:hidden; display:block; }
 .project-media img{ width:100%; height:100%; object-fit:cover; object-position:top; transition:transform .6s ease; }
@@ -242,7 +256,7 @@ section{ padding:70px 0; }
 /* Fix 1: Featured sits on the image, so it no longer pushes the title out of alignment */
 .featured-badge{ position:absolute; top:16px; left:16px; z-index:2; display:inline-flex; align-items:center; gap:6px; font-size:var(--fs-xs); font-weight:700; color:#fff; background:linear-gradient(135deg,var(--primary),var(--accent)); border-radius:var(--r-pill); padding:5px 12px; box-shadow:var(--shadow); }
 .project-body h3{ font-size:var(--fs-lg); }
-.project-body > p{ margin-top:10px; font-size:var(--fs-base); color:var(--muted); line-height:1.6; }
+.project-body > p{ margin-top:10px; font-size:var(--fs-md); color:var(--muted); line-height:1.65; }
 .tag-list{ margin-top:18px; display:flex; flex-wrap:wrap; gap:8px; }
 .tag-list span{ background:transparent; border:1px solid var(--border); border-radius:var(--r-md); padding:5px 10px; font-size:var(--fs-xs); font-weight:500; color:var(--muted); }
 .project-links{ margin-top:auto; padding-top:22px; display:flex; flex-wrap:wrap; gap:10px; }
@@ -251,88 +265,135 @@ section{ padding:70px 0; }
 .gh-panel{ margin-top:var(--grid-gap); padding:22px; }
 @media(min-width:640px){ .gh-panel{ padding:28px; } }
 .gh-panel.card:hover{ transform:none; box-shadow:var(--shadow); } /* a heatmap shouldn't lift on hover */
-/* Audit r7 #6: title → summary → button, stacked in one column so the button sits right under what it relates to */
+/* Audit r9 #5: order is now title → summary → graph → latest activity → "View GitHub profile", so the heading flows straight into its data */
 .gh-head{ display:flex; flex-direction:column; align-items:center; text-align:center; gap:4px; }
 .gh-head h3{ font-size:var(--fs-lg); }
-.gh-summary{ font-size:var(--fs-base); color:var(--muted); }
-.gh-head .btn{ margin-top:10px; }
+.gh-summary{ font-size:var(--fs-md); color:var(--muted); }
+/* Audit r8 #6: the total is the big number of the panel, so the graph block has a clear focal point */
+.gh-total{ font-family:'Syne', ui-sans-serif, sans-serif; font-size:var(--fs-xl); font-weight:800; margin-right:6px; vertical-align:-2px; }
+.gh-lastday{ display:block; margin-top:4px; font-size:var(--fs-sm); color:var(--muted); }
+.gh-lastday b{ color:var(--foreground); font-weight:600; }
 .gh-scroll{ margin-top:22px; overflow-x:auto; padding-bottom:6px; }
 .gh-scroll[hidden]{ display:none; }
-.gh-graph{ min-width:720px; }
-.gh-months, .gh-cells{ display:grid; gap:3px; }
-.gh-months{ margin-bottom:6px; font-size:var(--fs-xs); color:var(--muted); font-weight:500; }
+/* Audit r8 #6: bigger squares (the graph is at least 900px wide and scrolls sideways on small screens, opening on the most recent weeks) */
+.gh-graph{ min-width:900px; }
+.gh-months, .gh-cells{ display:grid; gap:4px; }
+.gh-months{ margin-bottom:8px; font-size:var(--fs-xs); color:var(--muted); font-weight:500; }
 .gh-months span{ white-space:nowrap; }
 .gh-cells{ grid-template-rows:repeat(7, auto); grid-auto-flow:column; }
-.gh-cell{ display:block; aspect-ratio:1; border-radius:3px; background:var(--bg-soft); border:1px solid var(--border); }
+/* Audit r8 #6: empty days are tinted from the text colour, so they stay visible on the dark surface too */
+.gh-cell{ display:block; aspect-ratio:1; border-radius:4px; background:color-mix(in srgb, var(--foreground) 7%, var(--surface)); border:1px solid var(--border); }
 .gh-cell.pad{ visibility:hidden; }
-.gh-cell.l1{ background:color-mix(in srgb, var(--primary) 28%, var(--surface)); border-color:transparent; }
-.gh-cell.l2{ background:color-mix(in srgb, var(--primary) 50%, var(--surface)); border-color:transparent; }
-.gh-cell.l3{ background:color-mix(in srgb, var(--primary) 75%, var(--surface)); border-color:transparent; }
+.gh-cell.l1{ background:color-mix(in srgb, var(--primary) 32%, var(--surface)); border-color:transparent; }
+.gh-cell.l2{ background:color-mix(in srgb, var(--primary) 55%, var(--surface)); border-color:transparent; }
+.gh-cell.l3{ background:color-mix(in srgb, var(--primary) 78%, var(--surface)); border-color:transparent; }
 .gh-cell.l4{ background:var(--primary); border-color:transparent; }
+/* the newest day that has contributions gets a ring so it's easy to spot */
+.gh-cell.latest{ box-shadow:0 0 0 2px var(--surface), 0 0 0 4px var(--accent); }
 .gh-legend{ margin-top:14px; display:flex; align-items:center; justify-content:flex-end; gap:5px; font-size:var(--fs-xs); color:var(--muted); font-weight:500; }
-.gh-legend .gh-cell{ width:12px; }
+.gh-legend .gh-cell{ width:14px; }
 .gh-legend[hidden]{ display:none; }
+
+/* Latest activity: the newest public GitHub events, fetched live */
+.gh-latest{ margin-top:22px; padding-top:20px; border-top:1px solid var(--border); }
+.gh-latest[hidden]{ display:none; }
+.gh-latest-title{ font-size:var(--fs-md); font-weight:700; text-align:center; }
+.gh-latest-list{ list-style:none; margin:8px auto 0; max-width:640px; display:grid; gap:0; }
+.gh-latest-list li{ display:flex; align-items:center; gap:12px; padding:14px 0; border-bottom:1px solid var(--border); font-size:var(--fs-md); line-height:1.6; color:var(--muted); }
+.gh-latest-list li:last-child{ border-bottom:0; }
+.gh-ev-icon{ flex-shrink:0; width:32px; height:32px; display:inline-flex; align-items:center; justify-content:center; border-radius:var(--r-md); background:color-mix(in srgb, var(--primary) 12%, transparent); color:var(--primary); font-size:var(--fs-sm); }
+.gh-ev-text{ flex:1; min-width:0; overflow-wrap:anywhere; line-height:1.6; }
+.gh-ev-text a{ color:var(--foreground); font-weight:600; }
+.gh-ev-text a:hover{ color:var(--primary); text-decoration:underline; text-underline-offset:3px; }
+.gh-ev-time{ flex-shrink:0; font-size:var(--fs-sm); font-weight:500; white-space:nowrap; }
+.gh-foot{ margin-top:22px; display:flex; justify-content:center; }
 
 /* Leadership & Exhibition (Vision Project 2026 + TechWiz 7, split out from the coding-project grid) */
 .leadership-grid{ margin-top:40px; display:grid; gap:var(--grid-gap); grid-template-columns:1fr; }
 @media(min-width:768px){ .leadership-grid{ margin-top:48px; grid-template-columns:1fr 1fr; } }
 .leadership-card{ overflow:hidden; display:flex; flex-direction:column; }
-.leadership-media{ position:relative; aspect-ratio:16/9; overflow:hidden; display:block; }
-.leadership-media img{ width:100%; height:100%; object-fit:cover; object-position:center 22%; transition:transform .6s ease; }
-.leadership-card:hover .leadership-media img{ transform:scale(1.05); }
-/* TechWiz 7 has no photo yet — a gradient + icon panel keeps the card the same shape as Vision's until you add one */
-.leadership-media.icon-media{ display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, color-mix(in srgb, var(--primary) 16%, var(--surface)), color-mix(in srgb, var(--accent) 16%, var(--surface))); }
-.leadership-media.icon-media i{ font-size:52px; color:var(--primary); }
+/* Vision Project 2026 now shows its exhibition photo; TechWiz 7 keeps the gradient + icon panel until it has a photo of its own.
+   Both panels share one 16:10 size so the two cards stay level. object-position keeps the face inside the crop. */
+.leadership-media{ position:relative; aspect-ratio:16/10; overflow:hidden; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, color-mix(in srgb, var(--primary) 16%, var(--surface)), color-mix(in srgb, var(--accent) 16%, var(--surface))); }
+.leadership-media i{ font-size:52px; color:var(--primary); }
+.leadership-media img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 6%; }
 .leadership-body{ padding:20px; display:flex; flex-direction:column; flex:1; }
 @media(min-width:640px){ .leadership-body{ padding:26px; } }
 .leadership-body h3{ font-size:var(--fs-lg); }
-.leadership-body > p{ margin-top:10px; font-size:var(--fs-base); color:var(--muted); line-height:1.6; }
+.leadership-body > p{ margin-top:10px; font-size:var(--fs-md); color:var(--muted); line-height:1.65; }
 
 /* Journey */
-/* Audit #3: narrower block so the timeline sits closer to the centred heading instead of leaning left */
-.timeline{ --dot-size:20px; --dot-top:32px; --dot-center:calc(var(--dot-top) + var(--dot-size) / 2); --tl-gap:30px; margin-top:40px; position:relative; max-width:640px; margin-left:auto; margin-right:auto; }
-@media(min-width:640px){ .timeline{ --tl-gap:36px; } }
+/* Bigger version: a wider block (860px) where each step is a full card with its status, year, a longer description,
+   tech/role tags and links. The dot sits on the status/year row of its card and the line runs from dot to dot.
+   From 768px up every row has the same height (grid-auto-rows:1fr) so dot-to-dot distances stay identical (Audit r8 #5);
+   on phones the rows size to their content so the photo card doesn't stretch the others. */
+.timeline{ --dot-size:20px; --dot-top:24px; --dot-center:calc(var(--dot-top) + var(--dot-size) / 2); --tl-gap:24px; margin-top:40px; position:relative; max-width:860px; margin-left:auto; margin-right:auto; display:grid; row-gap:var(--tl-gap); }
+@media(min-width:640px){ .timeline{ --tl-gap:28px; --dot-top:26px; } }
 @media(min-width:768px){ .timeline{ margin-top:56px; } }
-.timeline-item{ position:relative; padding-left:48px; margin-bottom:var(--tl-gap); }
-@media(min-width:640px){ .timeline-item{ padding-left:56px; } }
-.timeline-item:last-child{ margin-bottom:0; }
+@media(min-width:860px){ .timeline{ grid-auto-rows:1fr; } }
+.timeline-item{ position:relative; padding-left:44px; display:flex; }
 /* Audit #6: the line is drawn per item, from this dot's centre to the next dot's centre; the last item has none, so nothing hangs below the final marker */
 .timeline-item:not(:last-child)::before{ content:''; position:absolute; left:calc(10px + var(--dot-size) / 2 - 1.5px); top:var(--dot-center); bottom:calc(-1 * (var(--tl-gap) + var(--dot-center))); width:3px; border-radius:var(--r-pill); background:var(--line); }
-/* Audit #2: the dot is centred on the H3 title (tag line + gap + half the H3 line), not on the small label above it */
 .timeline-dot{ position:absolute; z-index:1; left:10px; top:var(--dot-top); width:var(--dot-size); height:var(--dot-size); border-radius:50%; background:linear-gradient(135deg,var(--primary),var(--accent)); box-shadow:0 0 0 5px var(--bg-soft); }
-.timeline-item .tag{ display:block; width:fit-content; margin-top:0; padding:2px 10px; font-size:var(--fs-base); line-height:20px; font-weight:700; color:var(--primary); background:color-mix(in srgb, var(--primary) 12%, transparent); border-radius:var(--r-pill); }
-.timeline-item h3{ margin-top:6px; font-size:var(--fs-lg); line-height:1.3; }
-.timeline-item p{ margin-top:8px; font-size:var(--fs-base); color:var(--muted); line-height:1.6; }
+.tl-card{ flex:1; min-width:0; padding:22px; display:flex; flex-direction:column; gap:18px; }
+@media(min-width:640px){ .tl-card{ padding:24px 26px; } }
+@media(min-width:860px){ .tl-card{ flex-direction:row; gap:24px; } }
+.tl-card.card:hover{ transform:none; box-shadow:var(--shadow); } /* the dot and line stay put, so the card shouldn't lift */
+.tl-body{ flex:1; min-width:0; display:flex; flex-direction:column; }
+.tl-meta{ display:flex; align-items:center; flex-wrap:wrap; gap:4px 12px; min-height:24px; }
+.tl-meta .tag{ display:block; width:fit-content; padding:2px 10px; font-size:var(--fs-base); line-height:20px; font-weight:700; color:var(--primary); background:color-mix(in srgb, var(--primary) 12%, transparent); border-radius:var(--r-pill); }
+.tl-year{ font-size:var(--fs-base); font-weight:700; color:var(--muted); }
+.tl-body h3{ margin-top:10px; font-size:var(--fs-lg); line-height:1.3; }
+.tl-text{ margin-top:8px; font-size:var(--fs-md); color:var(--muted); line-height:1.7; }
+.tl-body .tag-list{ margin-top:14px; }
+.tl-links{ margin-top:auto; padding-top:18px; display:flex; flex-wrap:wrap; gap:10px; }
+/* every journey step has a picture panel: a landscape 16:10 thumbnail, under the text on phones and tablets and beside the text from 860px.
+   - a real photo or project screenshot: <div class="tl-media"><img ...></div>
+   - no photo yet: add class "icon" and put a Font Awesome icon inside. Swap it for an <img> when you have a photo. */
+.tl-media{ position:relative; overflow:hidden; border-radius:var(--r-md); border:1px solid var(--border); aspect-ratio:16/10; width:100%; max-width:460px; }
+@media(min-width:860px){ .tl-media{ flex:0 0 250px; width:250px; max-width:none; align-self:flex-start; } }
+.tl-media img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 8%; }
+.tl-media img.top{ object-position:top; }                                                  /* website screenshots: show the top of the page */
+.tl-media.icon{ display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, color-mix(in srgb, var(--primary) 16%, var(--surface)), color-mix(in srgb, var(--accent) 16%, var(--surface))); }
+.tl-media.icon i{ font-size:44px; color:var(--primary); }
+.tl-media.icon .net-logo{ width:84px; height:84px; border-radius:16px; box-shadow:var(--shadow); }
+/* logo panel (Aptech): the whole logo is always visible (contain). The panel is filled with the logo's own yellow (#fcb616),
+   so it still looks like a full, edge-to-edge picture with nothing cropped. */
+.tl-media.logo{ background:#fcb616; }
+.tl-media.logo img{ object-fit:contain; object-position:center; }
 
 /* Contact */
 /* Audit r3 #3: fixed line-height on the heading and a slightly shorter bottom padding, so top and bottom read as equal */
-.contact-panel{ margin-top:40px; max-width:880px; margin-left:auto; margin-right:auto; padding:24px 24px 20px; }
+.contact-panel{ margin-top:40px; max-width:1000px; margin-left:auto; margin-right:auto; padding:24px 24px 20px; }
 @media(min-width:768px){ .contact-panel{ margin-top:48px; } }
 @media(min-width:640px){ .contact-panel{ padding:34px 34px 28px; } }
 @media(min-width:960px){ .contact-panel{ padding:40px 40px 34px; } }
 .contact-panel h3{ font-size:var(--fs-lg); line-height:1.3; }
-.contact-panel > div > p.lead{ margin-top:8px; font-size:var(--fs-base); color:var(--muted); }
+.contact-panel > div > p.lead{ margin-top:8px; font-size:var(--fs-md); color:var(--muted); }
 /* Audit r3 #7/#11: Location is no longer a card. It's a plain line of text, so nothing that looks clickable does nothing,
    and every card left under "Reach me directly" is a real channel. */
-.contact-location{ margin-top:12px; display:flex; align-items:center; gap:8px; font-size:var(--fs-base); color:var(--muted); font-weight:500; }
+.contact-location{ margin-top:12px; display:flex; align-items:center; gap:8px; font-size:var(--fs-md); color:var(--muted); font-weight:500; }
 .contact-location i{ color:var(--primary); }
 /* Three channels fit in one row on desktop, two or one on smaller screens */
 .contact-items{ margin-top:24px; display:grid; grid-template-columns:1fr; gap:var(--grid-gap); }
 @media(min-width:680px){ .contact-items{ grid-template-columns:repeat(3,1fr); } }
-.contact-item{ display:flex; align-items:center; gap:12px; border-radius:var(--r-md); background:var(--bg-soft); padding:14px 18px; transition:.2s; min-width:0; }
-.contact-item:hover{ background:color-mix(in srgb, var(--primary) 8%, var(--bg-soft)); }
-.contact-item .ci-icon{ flex-shrink:0; width:38px; height:38px; display:inline-flex; align-items:center; justify-content:center; border-radius:var(--r-md); background:var(--surface); color:var(--primary); }
+.contact-item{ display:flex; align-items:center; gap:12px; border-radius:var(--r-md); background:var(--surface); border:1px solid var(--border-strong); padding:14px 18px; transition:.2s; min-width:0; }
+.contact-item:hover{ border-color:var(--primary); background:color-mix(in srgb, var(--primary) 6%, var(--surface)); }
+.contact-item .ci-icon{ flex-shrink:0; width:38px; height:38px; display:inline-flex; align-items:center; justify-content:center; border-radius:var(--r-md); background:var(--bg-soft); color:var(--primary); }
 .contact-item .ci-label{ display:block; font-size:var(--fs-xs); color:var(--muted); font-weight:500; }
 .contact-item .ci-value{ display:block; font-size:var(--fs-sm); font-weight:600; overflow-wrap:anywhere; line-height:1.35; }
 .contact-item{ position:relative; }
-.copy-toast{ position:absolute; top:-34px; left:50%; transform:translateX(-50%) translateY(4px); display:inline-flex; align-items:center; gap:6px; background:var(--foreground); color:var(--bg); font-size:var(--fs-xs); font-weight:600; padding:6px 12px; border-radius:var(--r-pill); box-shadow:var(--shadow); white-space:nowrap; opacity:0; pointer-events:none; transition:opacity .18s ease, transform .18s ease; z-index:3; }
-.copy-toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+/* Audit r11 #6: a small icon at the end of each card says what a click does (copy the number / email, or open GitHub in a new tab) */
+.contact-item .ci-hint{ position:absolute; top:9px; right:12px; color:var(--primary); font-size:var(--fs-base); transition:color .2s ease; }
+.contact-item:hover .ci-hint{ color:var(--primary-dark); }
+.copy-toast{ position:absolute; top:-34px; left:50%; transform:translateX(-50%) translateY(4px); display:inline-flex; align-items:center; gap:6px; background:var(--foreground); color:var(--bg); font-size:var(--fs-xs); font-weight:600; padding:6px 12px; border-radius:var(--r-pill); box-shadow:var(--shadow); white-space:nowrap; opacity:0; visibility:hidden; pointer-events:none; transition:opacity .18s ease, transform .18s ease, visibility .18s; z-index:3; }
+.copy-toast.show{ opacity:1; visibility:visible; transform:translateX(-50%) translateY(0); }
 .copy-toast i{ color:var(--success); }
 
 /* Footer */
 footer{ border-top:1px solid var(--border); padding:32px 0; }
 @media(min-width:640px){ footer{ padding:36px 0; } }
-.footer-inner{ display:flex; flex-direction:column; gap:12px; align-items:center; justify-content:space-between; font-size:var(--fs-base); color:var(--muted); text-align:center; }
+.footer-inner{ display:flex; flex-direction:column; gap:12px; align-items:center; justify-content:space-between; font-size:var(--fs-md); color:var(--muted); text-align:center; }
 @media(min-width:640px){ .footer-inner{ flex-direction:row; text-align:left; } }
 .footer-inner b{ color:var(--foreground); font-weight:700; }
 /* Audit r4 #1: "Back to top" now has ONE treatment, the floating button. The footer text link is gone. */
@@ -382,7 +443,6 @@ footer{ border-top:1px solid var(--border); padding:32px 0; }
 <section class="hero" id="home">
   <div class="hero-glow"></div>
   <div class="container hero-grid">
-    <span class="badge-pill"><span class="dot"></span> Available for freelance projects</span>
     <h1>Hi, I'm <span class="text-gradient">Junaid Arif</span></h1>
     <p class="role">Frontend &amp; Laravel Developer</p>
     <!-- Audit r4 #3: these two facts used to float at the portrait's corners; they now sit with the rest of the intro text -->
@@ -394,6 +454,8 @@ footer{ border-top:1px solid var(--border); padding:32px 0; }
     <p class="hero-desc">I build responsive, dynamic web applications with <b>HTML, CSS, JavaScript, PHP, Laravel and MySQL</b> — and right now I'm also working with <b>C#, ASP.NET, .NET and ASP.NET Core</b>, while leading my group in <b>TechWiz 7</b>. Real-world problems turned into clean, functional systems.</p>
     <!-- Audit r5 #3: Copy email + GitHub removed from the hero; both already live in the Contact section -->
     <div class="hero-actions">
+      <!-- Audit r12: the availability badge sits with the CTA buttons now, instead of floating above the heading -->
+      <span class="badge-pill"><span class="dot"></span> Available for freelance projects &amp; internships</span>
       <div class="hero-cta">
         <a href="#projects" class="btn btn-primary">View Projects <i class="fa-solid fa-arrow-right"></i></a>
         <!-- Audit r7 #5: was btn-outline (near-equal weight to the primary CTA); now a lighter ghost link so View Projects reads as the one primary action -->
@@ -407,10 +469,10 @@ footer{ border-top:1px solid var(--border); padding:32px 0; }
       </div>
     </div>
   </div>
-  <!-- Audit r5 #2: centred, so it bridges the left-aligned hero and the centred sections below -->
+  <!-- Audit r9 #1: a small text link now, so it no longer competes with the two hero buttons -->
   <div class="container scroll-cue">
     <a href="#about" class="scroll-indicator" aria-label="Scroll down">
-      <span>Scroll Down</span>
+      <span>Scroll down</span>
       <i class="fa-solid fa-chevron-down"></i>
     </a>
   </div>
@@ -633,20 +695,28 @@ footer{ border-top:1px solid var(--border); padding:32px 0; }
       </article>
     </div>
 
-    <!-- GitHub activity: the graph is drawn by the script at the bottom from your public GitHub profile -->
+    <!-- GitHub activity: the graph and the "Latest activity" list are drawn by the script at the bottom from your public GitHub profile -->
     <div class="card gh-panel reveal-init">
       <div class="gh-head">
         <h3>GitHub activity</h3>
         <p class="gh-summary" id="ghSummary">Loading contributions…</p>
-        <a href="https://github.com/arifjunaid039" target="_blank" rel="noreferrer" class="btn btn-outline btn-sm">
-          <i class="fa-brands fa-github"></i> View GitHub profile
-        </a>
       </div>
       <div class="gh-scroll" id="ghScroll" hidden>
         <div class="gh-graph" id="ghGraph" role="img" aria-label="GitHub contribution graph for the last year"></div>
       </div>
       <div class="gh-legend" id="ghLegend" hidden>
         Less <span class="gh-cell l0"></span><span class="gh-cell l1"></span><span class="gh-cell l2"></span><span class="gh-cell l3"></span><span class="gh-cell l4"></span> More
+      </div>
+      <!-- Latest activity: appears only when GitHub's public events could be loaded -->
+      <div class="gh-latest" id="ghLatest" hidden>
+        <p class="gh-latest-title">Latest activity</p>
+        <ul class="gh-latest-list" id="ghLatestList"></ul>
+      </div>
+      <!-- Audit r9 #5: the profile button sits below the data, not between the heading and the graph -->
+      <div class="gh-foot">
+        <a href="https://github.com/arifjunaid039" target="_blank" rel="noreferrer" class="btn btn-outline btn-sm">
+          <i class="fa-brands fa-github"></i> View GitHub profile
+        </a>
       </div>
     </div>
   </div>
@@ -660,11 +730,12 @@ footer{ border-top:1px solid var(--border); padding:32px 0; }
       <h2>Leading Beyond the Code</h2>
       <p>Group and exhibition work where I stepped up to lead, not just build.</p>
     </div>
+    <!-- Audit r9 #4: each button goes to its Journey entry. Vision Project 2026 shows its exhibition photo (assets/vision-project-2026.jpeg); TechWiz 7 keeps the icon panel until it has a photo. -->
     <div class="leadership-grid reveal-init">
       <article class="card leadership-card">
         <div class="leadership-media">
           <span class="status-pill static">Exhibition</span>
-          <img src="assets/vision-project-2026.jpg" alt="Vision Project 2026 exhibition photo" loading="lazy">
+          <img src="assets/vision-project-2026.jpeg" alt="Vision Project 2026 at the exhibition" loading="lazy">
         </div>
         <div class="leadership-body">
           <h3>Vision Project 2026</h3>
@@ -672,10 +743,15 @@ footer{ border-top:1px solid var(--border); padding:32px 0; }
           <div class="tag-list">
             <span>Project leader</span><span>Exhibition</span>
           </div>
+          <div class="project-links">
+            <a href="#journey" class="btn btn-outline btn-sm">
+              <i class="fa-solid fa-route"></i> See it in my journey
+            </a>
+          </div>
         </div>
       </article>
       <article class="card leadership-card">
-        <div class="leadership-media icon-media">
+        <div class="leadership-media">
           <span class="status-pill static">Ongoing</span>
           <i class="fa-solid fa-users-gear"></i>
         </div>
@@ -684,6 +760,11 @@ footer{ border-top:1px solid var(--border); padding:32px 0; }
           <p>Currently leading my group through TechWiz 7, coordinating the build while expanding into the .NET ecosystem alongside it.</p>
           <div class="tag-list">
             <span>Group leader</span><span>C# &amp; .NET</span>
+          </div>
+          <div class="project-links">
+            <a href="#journey" class="btn btn-outline btn-sm">
+              <i class="fa-solid fa-route"></i> See it in my journey
+            </a>
           </div>
         </div>
       </article>
@@ -697,50 +778,137 @@ footer{ border-top:1px solid var(--border); padding:32px 0; }
     <div class="section-heading reveal-init">
       <p class="eyebrow">My Journey</p>
       <h2>How I Got Here</h2>
+      <p>From Aptech to leading teams in 2026, newest first.</p>
     </div>
+    <!-- To add a year to an older step, put <span class="tl-year">2025</span> right after its <span class="tag"> (same as the 2026 steps). -->
     <div class="timeline">
+
       <div class="timeline-item reveal-init">
         <span class="timeline-dot"></span>
-        <p class="tag">Ongoing</p>
-        <h3>Learning ASP.NET, .NET &amp; ASP.NET Core</h3>
-        <p>Currently expanding into the .NET ecosystem alongside my PHP &amp; Laravel work, building with C#, ASP.NET and ASP.NET Core.</p>
+        <article class="card tl-card">
+          <div class="tl-body">
+            <div class="tl-meta"><span class="tag">Ongoing</span><span class="tl-year">2026</span></div>
+            <h3>Learning ASP.NET, .NET &amp; ASP.NET Core</h3>
+            <p class="tl-text">Learning C#, ASP.NET and ASP.NET Core alongside PHP &amp; Laravel, so I can build across both stacks.</p>
+            <div class="tag-list">
+              <span>C#</span><span>.NET</span><span>ASP.NET</span><span>ASP.NET Core</span>
+            </div>
+          </div>
+          <div class="tl-media icon" role="img" aria-label=".NET">
+            <svg class="net-logo" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="64" height="64" rx="12" fill="#512BD4"/><text x="32" y="40" text-anchor="middle" font-family="'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif" font-weight="800" font-size="21" fill="#ffffff">.NET</text></svg>
+          </div>
+        </article>
       </div>
+
       <div class="timeline-item reveal-init">
         <span class="timeline-dot"></span>
-        <p class="tag">Ongoing</p>
-        <h3>TechWiz 7 — Group Leader</h3>
-        <p>Enrolled in TechWiz 7 and leading my group.</p>
+        <article class="card tl-card">
+          <div class="tl-body">
+            <div class="tl-meta"><span class="tag">Ongoing</span><span class="tl-year">2026</span></div>
+            <h3>TechWiz 7 — Group Leader</h3>
+            <p class="tl-text">Leading my group in TechWiz 7 and coordinating the build.</p>
+            <div class="tag-list">
+              <span>Group leader</span><span>Teamwork</span><span>C# &amp; .NET</span>
+            </div>
+          </div>
+          <div class="tl-media icon" aria-hidden="true"><i class="fa-solid fa-users-gear"></i></div>
+        </article>
       </div>
+
       <div class="timeline-item reveal-init">
         <span class="timeline-dot"></span>
-        <p class="tag">Exhibition</p>
-        <h3>Vision Project 2026</h3>
-        <p>Led the team as project leader and took the project to the exhibition.</p>
+        <article class="card tl-card">
+          <div class="tl-body">
+            <div class="tl-meta"><span class="tag">Exhibition</span><span class="tl-year">2026</span></div>
+            <h3>Vision Project 2026</h3>
+            <p class="tl-text">Led the team as project leader and took it to the exhibition with a working demo.</p>
+            <div class="tag-list">
+              <span>Project leader</span><span>Exhibition</span><span>Team lead</span>
+            </div>
+          </div>
+          <div class="tl-media">
+            <img src="assets/vision-project-2026.jpeg" alt="Vision Project 2026 exhibition photo" loading="lazy">
+          </div>
+        </article>
       </div>
+
       <div class="timeline-item reveal-init">
         <span class="timeline-dot"></span>
-        <p class="tag">Completed</p>
-        <h3>Built BackToYou</h3>
-        <p>Finished a full-stack Laravel Lost &amp; Found platform — auth, messaging, claims, admin panel and OTP-based registration.</p>
+        <article class="card tl-card">
+          <div class="tl-body">
+            <div class="tl-meta"><span class="tag">Completed</span></div>
+            <h3>Built BackToYou</h3>
+            <p class="tl-text">A full-stack Laravel Lost &amp; Found platform with in-app messaging, claim tracking, an admin panel and OTP registration.</p>
+            <div class="tag-list">
+              <span>Laravel</span><span>PHP</span><span>MySQL</span><span>Blade</span><span>JavaScript</span>
+            </div>
+            <div class="tl-links">
+              <a href="https://github.com/arifjunaid039/BackToYou" target="_blank" rel="noreferrer" class="btn btn-outline btn-sm"><i class="fa-brands fa-github"></i> View code on GitHub</a>
+            </div>
+          </div>
+          <div class="tl-media">
+            <img class="top" src="assets/backtoyou.jpg" alt="BackToYou — Lost &amp; Found Platform preview" loading="lazy">
+          </div>
+        </article>
       </div>
+
       <div class="timeline-item reveal-init">
         <span class="timeline-dot"></span>
-        <p class="tag">Academic project</p>
-        <h3>Full-Stack PHP Systems</h3>
-        <p>Built the Corona Test &amp; Vaccination System — patient registration, appointment booking, AJAX-driven doctor selection and an admin dashboard.</p>
+        <article class="card tl-card">
+          <div class="tl-body">
+            <div class="tl-meta"><span class="tag">Academic project</span></div>
+            <h3>Full-Stack PHP Systems</h3>
+            <p class="tl-text">A patient registration and appointment system with AJAX doctor selection and an admin dashboard.</p>
+            <div class="tag-list">
+              <span>PHP</span><span>MySQL</span><span>AJAX</span><span>jQuery</span><span>Bootstrap</span>
+            </div>
+            <div class="tl-links">
+              <a href="https://github.com/arifjunaid039/Corona-test-and-vaccination-system-Cognizance" target="_blank" rel="noreferrer" class="btn btn-outline btn-sm"><i class="fa-brands fa-github"></i> View code on GitHub</a>
+            </div>
+          </div>
+          <div class="tl-media">
+            <img class="top" src="assets/corona.png" alt="Corona Test &amp; Vaccination System preview" loading="lazy">
+          </div>
+        </article>
       </div>
+
       <div class="timeline-item reveal-init">
         <span class="timeline-dot"></span>
-        <p class="tag">Early projects</p>
-        <h3>Frontend Foundations</h3>
-        <p>Shipped responsive static sites — Oxford Sofa and Wheels Motor — sharpening HTML, CSS, Bootstrap and JavaScript fundamentals.</p>
+        <article class="card tl-card">
+          <div class="tl-body">
+            <div class="tl-meta"><span class="tag">Early projects</span></div>
+            <h3>Frontend Foundations</h3>
+            <p class="tl-text">Built Oxford Sofa and Wheels Motor, two responsive static sites, to sharpen my HTML, CSS and JavaScript.</p>
+            <div class="tag-list">
+              <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Bootstrap</span><span>jQuery</span>
+            </div>
+            <div class="tl-links">
+              <a href="https://github.com/arifjunaid039?tab=repositories" target="_blank" rel="noreferrer" class="btn btn-outline btn-sm"><i class="fa-brands fa-github"></i> View code on GitHub</a>
+            </div>
+          </div>
+          <div class="tl-media">
+            <img class="top" src="assets/oxford.jpg" alt="Oxford Sofa Website preview" loading="lazy">
+          </div>
+        </article>
       </div>
+
       <div class="timeline-item reveal-init">
         <span class="timeline-dot"></span>
-        <p class="tag">Beginning</p>
-        <h3>Started at Aptech</h3>
-        <p>Began formal training in web development — programming fundamentals, databases and structured problem-solving.</p>
+        <article class="card tl-card">
+          <div class="tl-body">
+            <div class="tl-meta"><span class="tag">Beginning</span></div>
+            <h3>Started at Aptech</h3>
+            <p class="tl-text">Started formal web development training: programming fundamentals, databases and problem-solving.</p>
+            <div class="tag-list">
+              <span>Programming fundamentals</span><span>Databases</span><span>Problem-solving</span>
+            </div>
+          </div>
+          <div class="tl-media logo">
+            <img src="assets/aptech.jpg" alt="Aptech Learning logo" loading="lazy">
+          </div>
+        </article>
       </div>
+
     </div>
   </div>
 </section>
@@ -751,7 +919,7 @@ footer{ border-top:1px solid var(--border); padding:32px 0; }
     <div class="section-heading reveal-init">
       <p class="eyebrow">Get In Touch</p>
       <h2>Let's Create Something Amazing</h2>
-      <p>Have a project in mind, or just want to say hi? Send a message — I usually reply within a day.</p>
+      <p>Have a project in mind, an internship opportunity, or just want to say hi? Send a message — I usually reply within a day.</p>
     </div>
 
     <div class="card contact-panel reveal-init">
@@ -761,19 +929,22 @@ footer{ border-top:1px solid var(--border); padding:32px 0; }
         <!-- Audit r3 #7/#11: location is plain text now, not a card that looks clickable -->
         <p class="contact-location"><i class="fa-solid fa-location-dot"></i> Based in Pakistan</p>
         <div class="contact-items">
-          <a href="tel:03182513504" class="contact-item" id="phoneLink" data-copy="03182513504">
+          <a href="tel:03182513504" class="contact-item" id="phoneLink" data-copy="03182513504" title="Click to copy phone number" aria-label="Copy phone number 0318-2513504">
             <span class="copy-toast" id="phoneToast"><i class="fa-solid fa-check"></i> Copied!</span>
             <span class="ci-icon"><i class="fa-solid fa-phone"></i></span>
             <span><span class="ci-label">Phone</span><span class="ci-value">0318-2513504</span></span>
+            <span class="ci-hint" aria-hidden="true"><i class="fa-regular fa-copy"></i></span>
           </a>
           <!-- Fix 12: every card in this list opens something on click -->
-          <a href="#" class="contact-item" id="emailLink">
+          <a href="#" class="contact-item" id="emailLink" title="Click to copy email address" aria-label="Copy email address">
             <span class="copy-toast" id="emailToast"><i class="fa-solid fa-check"></i> Copied!</span>
             <span class="ci-icon"><i class="fa-solid fa-envelope"></i></span>
             <span><span class="ci-label">Email</span><span class="ci-value" id="emailValue"></span></span>
+            <span class="ci-hint" aria-hidden="true"><i class="fa-regular fa-copy"></i></span>
           </a>
-          <a href="https://github.com/arifjunaid039" target="_blank" rel="noreferrer" class="contact-item"><span class="ci-icon"><i class="fa-brands fa-github"></i></span>
+          <a href="https://github.com/arifjunaid039" target="_blank" rel="noreferrer" class="contact-item" title="Open GitHub profile in a new tab" aria-label="Open GitHub profile (opens in a new tab)"><span class="ci-icon"><i class="fa-brands fa-github"></i></span>
             <span><span class="ci-label">GitHub</span><span class="ci-value">github.com/arifjunaid039</span></span>
+            <span class="ci-hint" aria-hidden="true"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
           </a>
         </div>
       </div>
@@ -853,7 +1024,7 @@ document.querySelectorAll('.mobile-link').forEach(a => a.addEventListener('click
 }));
 
 // ---------- Hero photo (optional) ----------
-// The "Currently" card is the default. If assets/junaid.jpg exists, the photo replaces it.
+// If assets/junaid.jpg exists, the photo shows in the hero. Otherwise the frame stays hidden.
 const heroPhoto = document.getElementById('heroPhoto');
 const heroPortrait = document.getElementById('heroPortrait');
 function showHeroPhoto(){ heroPortrait.hidden = false; }
@@ -875,7 +1046,8 @@ document.querySelectorAll('.project-card[data-demo]').forEach(card => {
 
 // ---------- GitHub contribution graph ----------
 // Reads your public contribution calendar from a free community API (github-contributions-api.jogruber.de).
-// If it can't be reached, the panel just shows the "View GitHub profile" button.
+// It always opens scrolled to the newest week, rings the most recent day with contributions, and shows that date
+// under the total. If the API can't be reached, the panel just shows the "View GitHub profile" button.
 (async function loadGithubContributions(){
   const USER = 'arifjunaid039';
   const summary = document.getElementById('ghSummary');
@@ -883,7 +1055,8 @@ document.querySelectorAll('.project-card[data-demo]').forEach(card => {
   const legend = document.getElementById('ghLegend');
   const graph = document.getElementById('ghGraph');
   try {
-    const res = await fetch('https://github-contributions-api.jogruber.de/v4/' + USER + '?y=last');
+    // the timestamp stops the browser reusing an old cached answer
+    const res = await fetch('https://github-contributions-api.jogruber.de/v4/' + USER + '?y=last&t=' + Date.now(), { cache: 'no-store' });
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
     const days = (data.contributions || []).slice().sort((a, b) => a.date.localeCompare(b.date));
@@ -894,10 +1067,14 @@ document.querySelectorAll('.project-card[data-demo]').forEach(card => {
     const cols = Math.ceil((pad + days.length) / 7);
     const total = days.reduce((n, d) => n + d.count, 0);
 
+    // newest day that has at least one contribution
+    let latestIdx = -1;
+    days.forEach((d, i) => { if (d.count > 0) latestIdx = i; });
+
     let cells = '<span class="gh-cell pad"></span>'.repeat(pad);
-    days.forEach(d => {
+    days.forEach((d, i) => {
       const label = utc(d.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
-      cells += '<span class="gh-cell l' + d.level + '" title="' + d.count + ' contribution' + (d.count === 1 ? '' : 's') + ' on ' + label + '"></span>';
+      cells += '<span class="gh-cell l' + d.level + (i === latestIdx ? ' latest' : '') + '" title="' + d.count + ' contribution' + (d.count === 1 ? '' : 's') + ' on ' + label + '"></span>';
     });
 
     // month labels: one per month change; drop a cramped first label (a month with only a sliver of columns)
@@ -916,11 +1093,103 @@ document.querySelectorAll('.project-card[data-demo]').forEach(card => {
       '<div class="gh-months" style="grid-template-columns:repeat(' + cols + ',1fr)">' + months + '</div>' +
       '<div class="gh-cells" style="grid-template-columns:repeat(' + cols + ',1fr)">' + cells + '</div>';
     graph.setAttribute('aria-label', total + ' GitHub contributions in the last year');
-    summary.textContent = total.toLocaleString('en-US') + ' contributions in the last year';
+
+    // total (big number) + the date of the newest contribution
+    let latestLine = '';
+    if (latestIdx >= 0) {
+      const ld = utc(days[latestIdx].date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+      latestLine = '<span class="gh-lastday">Latest contribution: <b>' + ld + '</b></span>';
+    }
+    summary.innerHTML = '<b class="gh-total text-gradient">' + total.toLocaleString('en-US') + '</b> contributions in the last year' + latestLine;
     scroll.hidden = false;
     legend.hidden = false;
+    // on narrow screens the graph scrolls sideways; open it on the most recent weeks (after layout has settled)
+    const jumpToLatest = () => { scroll.scrollLeft = scroll.scrollWidth; };
+    requestAnimationFrame(jumpToLatest);
+    window.addEventListener('load', jumpToLatest);
   } catch (e) {
     summary.textContent = 'Contribution graph is unavailable right now. Open my GitHub profile to see it.';
+  }
+})();
+
+// ---------- Latest GitHub activity ----------
+// Reads your newest public events straight from GitHub (api.github.com/users/<name>/events/public, no key needed).
+// It lists pushes, pull requests, new repos/branches, issues and forks (the latest 5). GitHub allows about 60 of these
+// requests per hour per visitor, so if the limit is hit or the network fails, the list simply stays hidden.
+(async function loadLatestActivity(){
+  const USER = 'arifjunaid039';
+  const box = document.getElementById('ghLatest');
+  const list = document.getElementById('ghLatestList');
+
+  function describe(ev){
+    const p = ev.payload || {};
+    switch (ev.type) {
+      case 'PushEvent': {
+        const branch = (p.ref || '').replace('refs/heads/', '');
+        return { icon: 'fa-code-commit', verb: 'Pushed' + (branch ? ' to ' + branch + ' in' : ' to') };
+      }
+      case 'PullRequestEvent': {
+        const merged = p.pull_request && p.pull_request.merged;
+        const a = merged ? 'Merged' : (p.action === 'closed' ? 'Closed' : 'Opened');
+        return { icon: 'fa-code-pull-request', verb: a + ' a pull request in' };
+      }
+      case 'CreateEvent':
+        if (p.ref_type === 'repository') return { icon: 'fa-folder-plus', verb: 'Created repository' };
+        if (p.ref_type === 'branch') return { icon: 'fa-code-branch', verb: 'Created branch ' + (p.ref || '') + ' in' };
+        return null;
+      case 'IssuesEvent':
+        return { icon: 'fa-circle-dot', verb: (p.action === 'closed' ? 'Closed' : 'Opened') + ' an issue in' };
+      case 'ForkEvent':
+        return { icon: 'fa-code-fork', verb: 'Forked' };
+      default:
+        return null;   // stars, watches etc. aren't contributions
+    }
+  }
+
+  function timeAgo(iso){
+    const s = (Date.now() - new Date(iso).getTime()) / 1000;
+    if (s < 3600) return Math.max(1, Math.round(s / 60)) + ' min ago';
+    if (s < 86400) return Math.round(s / 3600) + ' h ago';
+    const d = Math.round(s / 86400);
+    if (d < 30) return d + (d === 1 ? ' day ago' : ' days ago');
+    return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  }
+
+  try {
+    const res = await fetch('https://api.github.com/users/' + USER + '/events/public?per_page=30');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const events = await res.json();
+    let shown = 0;
+    for (const ev of events) {
+      const info = describe(ev);
+      if (!info || !ev.repo || !ev.repo.name) continue;
+
+      const li = document.createElement('li');
+
+      const icon = document.createElement('span');
+      icon.className = 'gh-ev-icon';
+      icon.innerHTML = '<i class="fa-solid ' + info.icon + '"></i>';
+
+      const text = document.createElement('span');
+      text.className = 'gh-ev-text';
+      text.appendChild(document.createTextNode(info.verb + ' '));
+      const link = document.createElement('a');
+      link.href = 'https://github.com/' + ev.repo.name;
+      link.target = '_blank'; link.rel = 'noreferrer';
+      link.textContent = ev.repo.name.split('/').pop();
+      text.appendChild(link);
+
+      const time = document.createElement('span');
+      time.className = 'gh-ev-time';
+      time.textContent = timeAgo(ev.created_at);
+
+      li.appendChild(icon); li.appendChild(text); li.appendChild(time);
+      list.appendChild(li);
+      if (++shown === 5) break;
+    }
+    if (shown) box.hidden = false;
+  } catch (e) {
+    // leave the list hidden
   }
 })();
 
@@ -934,25 +1203,44 @@ const revealObserver = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal-init').forEach(el => revealObserver.observe(el));
 
 // ---------- Active nav link (scrollspy) ----------
+// Audit r8 #3: reads scroll position directly. It runs on load (so opening index.html#about
+// highlights About straight away), the Services section keeps Skills highlighted (Services has no nav link),
+// and reaching the bottom of the page always lights up Contact.
 const sectionIds = ['home','about','skills','services','projects','leadership','journey','contact'];
-const navMap = {};
-sectionIds.forEach(id => {
-  navMap[id] = document.querySelectorAll('a[href="#' + id + '"].mobile-link, .nav-links a[href="#' + id + '"]');
-});
-const spy = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-    const id = entry.target.id;
-    sectionIds.forEach(s => navMap[s].forEach(a => a.classList.toggle('active', s === id)));
+const spyAlias = { services: 'skills' };
+const navLinks = document.querySelectorAll('.nav-links a, .mobile-menu a');
+function setActiveNav(id){
+  const target = spyAlias[id] || id;
+  navLinks.forEach(a => {
+    const on = a.getAttribute('href') === '#' + target;
+    a.classList.toggle('active', on);
+    if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
   });
-}, { rootMargin: '-45% 0px -50% 0px' });
-sectionIds.forEach(id => { const el = document.getElementById(id); if (el) spy.observe(el); });
+}
+let spyQueued = false;
+function updateSpy(){
+  spyQueued = false;
+  const marker = window.innerHeight * 0.4;   // a section counts as "current" once its top passes 40% down the screen
+  let current = sectionIds[0];
+  sectionIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top <= marker) current = id;
+  });
+  if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) current = 'contact';
+  setActiveNav(current);
+}
+window.addEventListener('scroll', () => { if (!spyQueued) { spyQueued = true; requestAnimationFrame(updateSpy); } }, { passive: true });
+window.addEventListener('resize', updateSpy);
+window.addEventListener('load', updateSpy);
+updateSpy();
 
 // ---------- Floating back-to-top ----------
+// Audit r10: stays hidden until the visitor has scrolled at least 1500px (or 1.5 screens), so it never shows near the top
 const backTop = document.getElementById('backTop');
-window.addEventListener('scroll', () => {
-  backTop.classList.toggle('show', window.scrollY > window.innerHeight * 0.8);
-}, { passive: true });
+function updateBackTop(){ backTop.classList.toggle('show', window.scrollY > Math.max(1500, window.innerHeight * 1.5)); }
+window.addEventListener('scroll', updateBackTop, { passive: true });
+window.addEventListener('resize', updateBackTop);
+updateBackTop();
 
 </script>
 </body>
