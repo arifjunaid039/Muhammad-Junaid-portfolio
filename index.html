@@ -268,6 +268,17 @@ section{ padding:70px 0; }
    image box exactly card-sized. Chrome/Edge (and recent Safari) crop it; browsers without support just show the
    uncropped screenshot. Tweak the 30% if you want more or less cut off the top. */
 .project-media img.crop-bottom{ object-view-box:inset(30% 0 0 0); object-position:center bottom; }
+/* TechWiz 7 project card: no screenshot yet, so the media area is a gradient + Laravel icon panel (same look as the Leadership panels).
+   Drop a screenshot in as an <img> inside .project-media.icon-panel and it will cover the icon. */
+.project-media.icon-panel{ aspect-ratio:5/4; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, color-mix(in srgb, var(--primary) 16%, var(--surface)), color-mix(in srgb, var(--accent) 16%, var(--surface))); }
+.project-media.icon-panel i.big{ font-size:52px; color:var(--primary); }
+.project-media.icon-panel img{ position:absolute; inset:0; object-position:center 28%; }
+/* The 5th card (odd one out in the 2-column grid) spans the full width as a horizontal card, so the grid has no orphan */
+@media(min-width:768px){
+  .projects-grid .project-card:last-child:nth-child(odd){ grid-column:1 / -1; flex-direction:row; }
+  .projects-grid .project-card:last-child:nth-child(odd) .project-media{ flex:0 0 42%; aspect-ratio:auto; min-height:420px; }
+  .projects-grid .project-card:last-child:nth-child(odd) .project-body{ flex:1; justify-content:center; }
+}
 /* Audit #8: the pill says the project TYPE on every card (Full-stack / Static) */
 .status-pill{ position:absolute; top:16px; right:16px; z-index:2; border-radius:var(--r-pill); padding:5px 12px; font-size:var(--fs-xs); font-weight:700; background:var(--surface); box-shadow:var(--shadow); }
 .status-pill.fullstack{ color:var(--primary); }
@@ -346,7 +357,7 @@ section{ padding:70px 0; }
 .leadership-card{ overflow:hidden; display:flex; flex-direction:column; }
 /* Vision Project 2026 now shows its exhibition photo; TechWiz 7 keeps the gradient + icon panel until it has a photo of its own.
    Both panels share one 16:10 size so the two cards stay level. object-position keeps the face inside the crop. */
-.leadership-media{ position:relative; aspect-ratio:16/10; overflow:hidden; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, color-mix(in srgb, var(--primary) 16%, var(--surface)), color-mix(in srgb, var(--accent) 16%, var(--surface))); }
+.leadership-media{ position:relative; aspect-ratio:5/4; overflow:hidden; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, color-mix(in srgb, var(--primary) 16%, var(--surface)), color-mix(in srgb, var(--accent) 16%, var(--surface))); }
 .leadership-media i{ font-size:52px; color:var(--primary); }
 .leadership-media img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 6%; }
 .leadership-body{ padding:20px; display:flex; flex-direction:column; flex:1; }
@@ -489,10 +500,10 @@ footer{ border-top:1px solid var(--border); padding:32px 0; }
     <!-- Audit r4 #3: these two facts used to float at the portrait's corners; they now sit with the rest of the intro text -->
     <p class="hero-meta">
       <span><i class="fa-solid fa-location-dot"></i> Based in Pakistan</span>
-      <span><i class="fa-solid fa-circle-check"></i> 4 projects shipped</span>
+      <span><i class="fa-solid fa-circle-check"></i> 5 projects shipped</span>
     </p>
     <!-- Audit r7 #4: the floating 'Currently' card is gone; that status now lives in this one bio paragraph instead -->
-    <p class="hero-desc">I build responsive, dynamic web applications with <b>HTML, CSS, JavaScript, PHP, Laravel and MySQL</b>, turning real-world problems into clean, functional systems. I'm leading my group in <b>TechWiz 7</b> with <b>Laravel</b> and learning <b>C#, ASP.NET, .NET and ASP.NET Core</b>.</p>
+    <p class="hero-desc">I build responsive, dynamic web applications with <b>HTML, CSS, JavaScript, PHP, Laravel and MySQL</b>, turning real-world problems into clean, functional systems. I led my group in <b>TechWiz 7</b> with <b>Laravel</b> and I'm learning <b>C#, ASP.NET, .NET and ASP.NET Core</b>.</p>
     <!-- Audit r5 #3: Copy email + GitHub removed from the hero; both already live in the Contact section -->
     <div class="hero-actions">
       <!-- Audit r12: the availability badge sits with the CTA buttons now, instead of floating above the heading -->
@@ -530,18 +541,18 @@ footer{ border-top:1px solid var(--border); padding:32px 0; }
     <div class="about-copy reveal-init">
       <p>I'm a web developer based in Pakistan, currently building my skills as a student at Aptech. My journey started with crafting responsive frontend interfaces and has grown into building full, database-driven applications with Laravel and MySQL.</p>
       <p>What drives me is turning real-world problems into clean, functional systems — like <b>BackToYou</b>, a full-stack Lost &amp; Found platform, and a Corona Test &amp; Vaccination Management System handling live patient data and admin workflows.</p>
-      <p>I'm also stepping into leadership: I led <b>Vision Project 2026</b> as project leader and took it to the exhibition, and I'm now enrolled in <b>TechWiz 7</b> as a group leader.</p>
+      <p>I'm also stepping into leadership: I led <b>Vision Project 2026</b> as project leader and took it to the exhibition, and I also led my group in <b>TechWiz 7</b> as group leader.</p>
       <p>Right now I'm expanding into the <b>.NET ecosystem</b> — building with <b>C#, ASP.NET and ASP.NET Core</b> — alongside my PHP &amp; Laravel work, so I can build across both stacks.</p>
       <p>When I'm not coding, I'm exploring new tools, sharpening my fundamentals across both stacks, and building side projects to keep leveling up.</p>
     </div>
 
     <div class="about-grid reveal-init">
       <div class="card stat-card">
-        <p class="stat-value">4</p>
+        <p class="stat-value">5</p>
         <p class="stat-label">Projects shipped</p>
       </div>
       <div class="card stat-card">
-        <p class="stat-value">2</p>
+        <p class="stat-value">3</p>
         <p class="stat-label">Full-stack systems built</p>
       </div>
       <div class="card stat-card">
@@ -658,7 +669,7 @@ footer{ border-top:1px solid var(--border); padding:32px 0; }
       <p>Systems I designed, built and shipped — full-stack platforms and polished frontends.</p>
     </div>
     <!-- Audit r5b #1: to show a "Live demo" button on a card, put its URL in that card's data-demo="" attribute. Empty = no button (no dead links). -->
-    <!-- Vision Project 2026 and TechWiz 7 now live in the Leadership section below — this grid is only the 4 shipped coding projects, so it's a clean 2x2. -->
+    <!-- Five projects: the 5th (TechWiz 7) spans the full width as a horizontal card, so the grid has no orphan. -->
     <div class="projects-grid reveal-init">
       <article class="card project-card" data-demo="">
         <a class="project-media" tabindex="-1" aria-hidden="true" href="https://github.com/arifjunaid039/BackToYou" target="_blank" rel="noreferrer" aria-label="BackToYou — Lost and Found Platform: view code on GitHub (opens in a new tab)">
@@ -742,9 +753,30 @@ footer{ border-top:1px solid var(--border); padding:32px 0; }
           </div>
         </div>
       </article>
+      <article class="card project-card" data-demo="">
+        <a class="project-media icon-panel" tabindex="-1" aria-hidden="true" href="https://github.com/bilalyaseen1128/CampusCoin" target="_blank" rel="noreferrer" aria-label="CampusCoin — Student Budgeting App: view code on GitHub (opens in a new tab)">
+          <span class="status-pill fullstack">Full-stack</span>
+          <i class="fa-brands fa-laravel big"></i>
+          <img src="assets/Techwiz_Project.png" alt="CampusCoin — student budgeting app preview" onerror="var f=['assets/Techwix.png','assets/Techwiz_Project.png'],i=+(this.dataset.i||0);if(i<f.length){this.dataset.i=i+1;this.src=f[i];}else{this.remove();}">
+          <span class="media-cue" aria-hidden="true"><span><i class="fa-solid fa-arrow-up-right-from-square"></i> View code</span></span>
+          <span class="media-go" aria-hidden="true"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+        </a>
+        <div class="project-body">
+          <h3><a href="https://github.com/bilalyaseen1128/CampusCoin" target="_blank" rel="noreferrer">CampusCoin — Student Budgeting App<span class="sr-only"> (opens in a new tab)</span></a></h3>
+          <p>A web-based personal finance app made for students. It lets them log income and expenses, organise spending into categories, set budgets and savings goals, and get simple saving tips, without linking a bank account. Built by a six-member team for TechWiz 7, where I led the group and built user login, registration, profile, file integration and the database design.</p>
+          <div class="tag-list">
+            <span>Laravel</span><span>PHP</span><span>MySQL</span><span>Blade</span><span>Bootstrap</span><span>TechWiz 7</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/bilalyaseen1128/CampusCoin" target="_blank" rel="noreferrer" class="btn btn-primary btn-sm">
+              <i class="fa-brands fa-github"></i> View code on GitHub
+            </a>
+          </div>
+        </div>
+      </article>
     </div>
 
-    <!-- GitHub activity: the graph and the "Latest activity" list are drawn by the script at the bottom from your public GitHub profile -->
+
     <div class="card gh-panel reveal-init">
       <div class="gh-head">
         <h3>GitHub Activity</h3>
@@ -779,14 +811,12 @@ footer{ border-top:1px solid var(--border); padding:32px 0; }
       <h2>Leading Beyond the Code</h2>
       <p>Group and exhibition work where I stepped up to lead, not just build.</p>
     </div>
-    <!-- Audit r9 #4: each button goes to its Journey entry. Vision Project 2026 shows its exhibition photo (assets/vision-project-2026.jpeg); TechWiz 7 keeps the icon panel until it has a photo. -->
+
     <div class="leadership-grid reveal-init">
       <article class="card leadership-card">
         <div class="leadership-media">
           <span class="status-pill static">Exhibition</span>
           <i class="fa-solid fa-trophy"></i>
-          <!-- Audit r18 #3: both Leadership panels work the same way now: an icon underneath and an optional photo on top.
-               Photo on both = add assets/techwiz-7.jpg. Icons on both = delete the <img> line below. -->
           <img src="assets/vision-project-2026.jpeg" alt="Vision Project 2026 at the exhibition" loading="lazy" onerror="this.remove()">
         </div>
         <div class="leadership-body">
@@ -804,14 +834,13 @@ footer{ border-top:1px solid var(--border); padding:32px 0; }
       </article>
       <article class="card leadership-card">
         <div class="leadership-media">
-          <span class="status-pill static">Ongoing</span>
+          <span class="status-pill static">Completed</span>
           <i class="fa-brands fa-laravel"></i>
-          <!-- Audit r14 #4: drop a group / event photo at assets/techwiz-7.jpg and it covers the icon so both cards match; until then this stays the Laravel icon panel -->
-          <img src="assets/techwiz-7.jpg" alt="TechWiz 7 group" loading="lazy" onerror="this.remove()">
+          <img src="assets/techwiz.png" alt="TechWiz 7 group" style="object-position:center 30%" onerror="var f=['assets/Techwix.png','assets/Techwiz.png'],i=+(this.dataset.i||0);if(i<f.length){this.dataset.i=i+1;this.src=f[i];}else{this.remove();}">
         </div>
         <div class="leadership-body">
           <h3><a href="#journey">TechWiz 7 — Group Leader</a></h3>
-          <p>Currently leading my group through TechWiz 7, coordinating the build in Laravel.</p>
+          <p>Led my group through TechWiz 7, coordinating the build of CampusCoin in Laravel.</p>
           <div class="tag-list">
             <span>Group leader</span><span>Laravel</span>
           </div>
@@ -834,13 +863,6 @@ footer{ border-top:1px solid var(--border); padding:32px 0; }
       <h2>How I Got Here</h2>
       <p>From Aptech to leading teams in 2026, newest first.</p>
     </div>
-    <!-- Audit r13 #5: compact timeline. Screenshots, tag chips and GitHub buttons are gone (Projects and Leadership already show them);
-         each step keeps its status + year, a title and one line, and the whole card links to the section with the full details.
-         Usability audit: every step now shows a year, including the four that were previously missing one. The three
-         'Ongoing' items are also grouped together at the top (Aptech Training moved up from the bottom), so current
-         activity is scannable in one place instead of being split across the whole section; 'Completed' items follow
-         below, newest first.
-         To add a step, copy one .timeline-item block and point the card's href at the section that holds the details. -->
     <div class="timeline">
 
       <div class="timeline-item">
@@ -856,22 +878,22 @@ footer{ border-top:1px solid var(--border); padding:32px 0; }
 
       <div class="timeline-item">
         <span class="timeline-dot"></span>
-        <a class="card tl-card" href="#leadership">
-          <div class="tl-meta"><span class="tag">Ongoing</span><span class="tl-year">2026</span></div>
+        <a class="card tl-card" href="#about">
+          <div class="tl-meta"><span class="tag">Ongoing</span><span class="tl-year">Started 2024</span></div>
           <div class="tl-body">
-            <h3>TechWiz 7 — Group Leader <i class="fa-solid fa-chevron-right tl-go" aria-hidden="true"></i></h3>
-            <p class="tl-text">Leading my group in TechWiz 7 and coordinating the Laravel build.</p>
+            <h3>Aptech Training <i class="fa-solid fa-chevron-right tl-go" aria-hidden="true"></i></h3>
+            <p class="tl-text">Started formal web development training: programming fundamentals, databases and problem-solving.</p>
           </div>
         </a>
       </div>
 
       <div class="timeline-item">
         <span class="timeline-dot"></span>
-        <a class="card tl-card" href="#about">
-          <div class="tl-meta"><span class="tag">Ongoing</span><span class="tl-year">Started 2024</span></div>
+        <a class="card tl-card" href="#projects">
+          <div class="tl-meta"><span class="tag done">Completed</span><span class="tl-year">2026</span></div>
           <div class="tl-body">
-            <h3>Aptech Training <i class="fa-solid fa-chevron-right tl-go" aria-hidden="true"></i></h3>
-            <p class="tl-text">Started formal web development training: programming fundamentals, databases and problem-solving.</p>
+            <h3>TechWiz 7 — CampusCoin <i class="fa-solid fa-chevron-right tl-go" aria-hidden="true"></i></h3>
+            <p class="tl-text">Led my group through TechWiz 7 and shipped CampusCoin, a Laravel budgeting app for students.</p>
           </div>
         </a>
       </div>
