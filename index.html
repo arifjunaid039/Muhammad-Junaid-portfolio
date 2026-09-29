@@ -305,6 +305,17 @@ section{ padding:70px 0; }
 .gh-total{ font-size:var(--fs-2xl); font-weight:800; color:var(--primary); margin-right:6px; vertical-align:-2px; }
 .gh-lastday{ display:block; margin-top:4px; font-size:var(--fs-sm); color:var(--muted); }
 .gh-lastday b{ color:var(--foreground); font-weight:600; }
+/* Live status: a green dot + 'Live · updated 2 min ago' and a Refresh button. The dot turns grey when the page is showing saved data (GitHub unreachable or rate-limited). */
+.gh-status{ margin-top:12px; display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:8px 14px; font-size:var(--fs-sm); font-weight:500; color:var(--muted); }
+.gh-status[hidden]{ display:none; }
+.gh-live{ display:inline-flex; align-items:center; gap:8px; }
+.gh-live-dot{ width:8px; height:8px; border-radius:50%; background:var(--success); box-shadow:0 0 0 3px color-mix(in srgb, var(--success) 25%, transparent); }
+.gh-status.stale .gh-live-dot{ background:var(--border-strong); box-shadow:none; }
+.gh-refresh{ display:inline-flex; align-items:center; gap:6px; padding:5px 12px; border:1px solid var(--border-strong); border-radius:var(--r-pill); background:transparent; color:var(--foreground); font-family:inherit; font-size:var(--fs-sm); font-weight:600; cursor:pointer; transition:color .2s ease, border-color .2s ease; }
+.gh-refresh:hover{ color:var(--primary); border-color:var(--primary); }
+.gh-refresh:disabled{ opacity:.65; cursor:progress; }
+.gh-refresh.spin i{ animation:ghspin .8s linear infinite; }
+@keyframes ghspin{ to{ transform:rotate(360deg); } }
 .gh-scroll{ margin-top:22px; overflow-x:auto; padding-bottom:6px; }
 .gh-scroll[hidden]{ display:none; }
 /* Audit r8 #6: bigger squares (the graph is at least 900px wide and scrolls sideways on small screens, opening on the most recent weeks) */
@@ -753,11 +764,13 @@ footer{ border-top:1px solid var(--border); padding:32px 0; }
           </div>
         </div>
       </article>
+      <!-- CampusCoin (TechWiz 7): the picture is assets/techwiz.png, the same file as the Leadership card. If that name is not found it tries assets/Techwix.png and assets/Techwiz.png
+           (file names are case-sensitive on Vercel); if neither exists the Laravel icon panel shows instead. Repo: https://github.com/bilalyaseen1128/CampusCoin -->
       <article class="card project-card" data-demo="">
         <a class="project-media icon-panel" tabindex="-1" aria-hidden="true" href="https://github.com/bilalyaseen1128/CampusCoin" target="_blank" rel="noreferrer" aria-label="CampusCoin — Student Budgeting App: view code on GitHub (opens in a new tab)">
           <span class="status-pill fullstack">Full-stack</span>
           <i class="fa-brands fa-laravel big"></i>
-          <img src="assets/Techwiz_Project.png" alt="CampusCoin — student budgeting app preview" onerror="var f=['assets/Techwix.png','assets/Techwiz_Project.png'],i=+(this.dataset.i||0);if(i<f.length){this.dataset.i=i+1;this.src=f[i];}else{this.remove();}">
+          <img src="assets/Techwiz_Project.png" alt="CampusCoin — student budgeting app preview" onerror="var f=['assets/Techwix.png','assets/techwiz.png'],i=+(this.dataset.i||0);if(i<f.length){this.dataset.i=i+1;this.src=f[i];}else{this.remove();}">
           <span class="media-cue" aria-hidden="true"><span><i class="fa-solid fa-arrow-up-right-from-square"></i> View code</span></span>
           <span class="media-go" aria-hidden="true"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
         </a>
@@ -776,11 +789,15 @@ footer{ border-top:1px solid var(--border); padding:32px 0; }
       </article>
     </div>
 
-
+    <!-- GitHub activity: the graph and the "Latest activity" list are drawn by the script at the bottom from your public GitHub profile -->
     <div class="card gh-panel reveal-init">
       <div class="gh-head">
         <h3>GitHub Activity</h3>
         <p class="gh-summary" id="ghSummary">Loading contributions…</p>
+        <div class="gh-status" id="ghStatus" hidden>
+          <span class="gh-live"><span class="gh-live-dot" aria-hidden="true"></span><span id="ghStatusText"></span></span>
+          <button type="button" class="gh-refresh" id="ghRefresh" aria-label="Refresh GitHub activity"><i class="fa-solid fa-rotate" aria-hidden="true"></i> Refresh</button>
+        </div>
       </div>
       <div class="gh-scroll" id="ghScroll" hidden>
         <div class="gh-graph" id="ghGraph" role="img" aria-label="GitHub contribution graph for the last year"></div>
@@ -811,12 +828,14 @@ footer{ border-top:1px solid var(--border); padding:32px 0; }
       <h2>Leading Beyond the Code</h2>
       <p>Group and exhibition work where I stepped up to lead, not just build.</p>
     </div>
-
+    <!-- Audit r9 #4: each button goes to its Journey entry. Vision Project 2026 shows its exhibition photo (assets/vision-project-2026.jpeg); TechWiz 7 keeps the icon panel until it has a photo. -->
     <div class="leadership-grid reveal-init">
       <article class="card leadership-card">
         <div class="leadership-media">
           <span class="status-pill static">Exhibition</span>
           <i class="fa-solid fa-trophy"></i>
+          <!-- Audit r18 #3: both Leadership panels work the same way now: an icon underneath and an optional photo on top.
+               Photo on both = add assets/techwiz.png. Icons on both = delete the <img> line below. -->
           <img src="assets/vision-project-2026.jpeg" alt="Vision Project 2026 at the exhibition" loading="lazy" onerror="this.remove()">
         </div>
         <div class="leadership-body">
@@ -836,6 +855,7 @@ footer{ border-top:1px solid var(--border); padding:32px 0; }
         <div class="leadership-media">
           <span class="status-pill static">Completed</span>
           <i class="fa-brands fa-laravel"></i>
+          <!-- Audit r14 #4: the group / event photo is assets/techwiz.png and it covers the icon so both cards match; until then this stays the Laravel icon panel -->
           <img src="assets/techwiz.png" alt="TechWiz 7 group" style="object-position:center 30%" onerror="var f=['assets/Techwix.png','assets/Techwiz.png'],i=+(this.dataset.i||0);if(i<f.length){this.dataset.i=i+1;this.src=f[i];}else{this.remove();}">
         </div>
         <div class="leadership-body">
@@ -863,6 +883,12 @@ footer{ border-top:1px solid var(--border); padding:32px 0; }
       <h2>How I Got Here</h2>
       <p>From Aptech to leading teams in 2026, newest first.</p>
     </div>
+    <!-- Audit r13 #5: compact timeline. Screenshots, tag chips and GitHub buttons are gone (Projects and Leadership already show them);
+         each step keeps its status + year, a title and one line, and the whole card links to the section with the full details.
+         Usability audit: every step now shows a year, including the four that were previously missing one. The 'Ongoing' items are
+         grouped together at the top so current activity is scannable in one place; 'Completed' items follow below, newest first.
+         TechWiz 7 is now Completed, so it moved out of the Ongoing group and sits at the top of the Completed items.
+         To add a step, copy one .timeline-item block and point the card's href at the section that holds the details. -->
     <div class="timeline">
 
       <div class="timeline-item">
@@ -1099,7 +1125,7 @@ document.querySelectorAll('.project-card[data-demo]').forEach(card => {
 });
 
 // ---------- GitHub: contribution graph + latest activity (live) ----------
-// Both parts refresh by themselves: right after the page loads, then every minute while the tab is open, and again
+// Both parts refresh by themselves: right after the page loads, then every minute while the tab is open (plus a Refresh button), and again
 // the moment you switch back to the tab. So a new commit shows up without reloading the page.
 //  - the year calendar comes from a free community API (github-contributions-api.jogruber.de)
 //  - the newest public events come straight from GitHub (api.github.com/users/<name>/events/public, no key needed)
@@ -1114,6 +1140,9 @@ document.querySelectorAll('.project-card[data-demo]').forEach(card => {
   const graph = document.getElementById('ghGraph');
   const box = document.getElementById('ghLatest');
   const list = document.getElementById('ghLatestList');
+  const status = document.getElementById('ghStatus');
+  const statusText = document.getElementById('ghStatusText');
+  const refreshBtn = document.getElementById('ghRefresh');
 
   const utc = d => new Date(d + 'T00:00:00Z');
   const fmt = (d, o) => utc(d).toLocaleDateString('en-US', Object.assign({ timeZone: 'UTC' }, o));
@@ -1127,6 +1156,8 @@ document.querySelectorAll('.project-card[data-demo]').forEach(card => {
   let blockedUntil = 0;        // after GitHub says 'rate limit', stop asking until it resets (saved, so reloads can't burn the limit again)
   let eventsAt = 0;            // when the events were last fetched successfully (saved too: reloads inside 3 minutes reuse them)
   let eventsFailed = false;    // true only when there is nothing to show at all
+  let eventsStale = false;     // true when the last events request failed, so what is shown is saved data
+  let busy = false;            // one refresh at a time
 
   // keep only what the page needs from a GitHub event (also keeps the saved copy small)
   function slim(ev){
@@ -1137,7 +1168,7 @@ document.querySelectorAll('.project-card[data-demo]').forEach(card => {
   // last good answers are saved in the browser, so the section still shows them if GitHub is slow, offline or rate-limited
   const CACHE_KEY = 'gh-live-cache-v1';
   function readCache(){ try { return JSON.parse(localStorage.getItem(CACHE_KEY) || 'null'); } catch (e) { return null; } }
-  function writeCache(){ try { localStorage.setItem(CACHE_KEY, JSON.stringify({ calendar: calendar, calendarAt: calendarAt, events: events.slice(0, 30), eventsAt: eventsAt, blockedUntil: blockedUntil })); } catch (e) {} }
+  function writeCache(){ try { localStorage.setItem(CACHE_KEY, JSON.stringify({ calendar: calendar, calendarAt: calendarAt, events: events.slice(0, 40), eventsAt: eventsAt, blockedUntil: blockedUntil })); } catch (e) {} }
   function relDay(d){
     const n = Math.round((utc(dayKey(Date.now())) - utc(d)) / 86400000);
     return n <= 0 ? 'today' : n === 1 ? 'yesterday' : n + ' days ago';
@@ -1337,7 +1368,7 @@ document.querySelectorAll('.project-card[data-demo]').forEach(card => {
 
   async function loadEvents(){
     // 'no-cache' = ask GitHub every time; when nothing changed it answers 304, which is free (it doesn't use up the rate limit)
-    const res = await fetch('https://api.github.com/users/' + USER + '/events/public?per_page=30', { cache: 'no-cache' });
+    const res = await fetch('https://api.github.com/users/' + USER + '/events/public?per_page=100', { cache: 'no-cache' });
     if (!res.ok) {
       if (res.status === 403 || res.status === 429) {                 // rate limit: pause until GitHub says it resets
         const reset = Number(res.headers && res.headers.get('x-ratelimit-reset'));
@@ -1347,20 +1378,44 @@ document.querySelectorAll('.project-card[data-demo]').forEach(card => {
       throw new Error('HTTP ' + res.status);
     }
     const data = await res.json();
-    if (Array.isArray(data)) { events = data.map(slim); eventsFailed = false; eventsAt = Date.now(); blockedUntil = 0; writeCache(); }
+    if (Array.isArray(data)) { events = data.map(slim); eventsFailed = false; eventsStale = false; eventsAt = Date.now(); blockedUntil = 0; writeCache(); }
   }
 
-  async function refresh(){
-    const jobs = [];
-    const eventsFresh = events.length > 0 && Date.now() - eventsAt < 3 * 60 * 1000;
-    if (eventsFresh) eventsFailed = false;
-    else if (Date.now() >= blockedUntil) jobs.push(loadEvents().catch(() => { eventsFailed = events.length === 0; }));
-    else eventsFailed = events.length === 0;
-    if (!calendar || Date.now() - calendarAt > 5 * 60 * 1000) jobs.push(loadCalendar().catch(() => {}));
-    await Promise.all(jobs);
-    if (calendar) renderGraph();
-    else if (firstPaint) summary.textContent = 'Contribution graph is unavailable right now. Open my GitHub profile to see it.';
-    renderLatest();
+  function ago(t){
+    const sec = Math.max(0, (Date.now() - t) / 1000);
+    if (sec < 45) return 'just now';
+    if (sec < 3600) return Math.round(sec / 60) + ' min ago';
+    if (sec < 86400) return Math.round(sec / 3600) + ' h ago';
+    return Math.round(sec / 86400) + ' days ago';
+  }
+  function renderStatus(){
+    const t = eventsAt || calendarAt;
+    if (!t) { status.hidden = true; return; }
+    const live = !eventsStale && eventsAt && Date.now() - eventsAt < 10 * 60 * 1000;
+    status.hidden = false;
+    status.classList.toggle('stale', !live);
+    statusText.textContent = (live ? 'Live · updated ' : 'Saved data · updated ') + ago(t);
+  }
+
+  // force = the Refresh button: skip the "still fresh" shortcuts (a GitHub rate-limit pause is still respected)
+  async function refresh(force){
+    if (busy) return;
+    busy = true;
+    try {
+      const jobs = [];
+      const eventsFresh = !force && events.length > 0 && Date.now() - eventsAt < 45 * 1000;
+      if (eventsFresh) { eventsFailed = false; }
+      else if (Date.now() >= blockedUntil) jobs.push(loadEvents().catch(() => { eventsFailed = events.length === 0; eventsStale = true; }));
+      else { eventsFailed = events.length === 0; eventsStale = true; }
+      if (force || !calendar || Date.now() - calendarAt > 2 * 60 * 1000) jobs.push(loadCalendar().catch(() => {}));
+      await Promise.all(jobs);
+      if (calendar) renderGraph();
+      else if (firstPaint) summary.textContent = 'Contribution graph is unavailable right now. Open my GitHub profile to see it.';
+      renderLatest();
+    } finally {
+      busy = false;
+      renderStatus();
+    }
   }
 
   // 1) paint what was saved last time straight away, 2) then ask GitHub for fresh data
@@ -1372,9 +1427,17 @@ document.querySelectorAll('.project-card[data-demo]').forEach(card => {
     if (calendar) renderGraph();
     renderLatest();
   }
+  renderStatus();
   refresh();
-  setInterval(() => { if (document.visibilityState === 'visible') refresh(); }, 3 * 60 * 1000);
+  // every minute while the tab is open (GitHub answers an unchanged events list with a free 304), and again the moment the tab is shown
+  setInterval(() => { if (document.visibilityState === 'visible') refresh(); }, 60 * 1000);
+  setInterval(renderStatus, 30 * 1000);   // keeps 'updated 2 min ago' honest between refreshes
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') refresh(); });
+  refreshBtn.addEventListener('click', async () => {
+    refreshBtn.disabled = true; refreshBtn.classList.add('spin');
+    await refresh(true);
+    refreshBtn.classList.remove('spin'); refreshBtn.disabled = false;
+  });
 })();
 
 // ---------- Scroll reveal ----------
