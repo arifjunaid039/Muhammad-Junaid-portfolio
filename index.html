@@ -1134,15 +1134,10 @@ document.querySelectorAll('.project-card[data-demo]').forEach(card => {
 });
 
 // ---------- GitHub: contribution graph + latest activity (live) ----------
-// Both parts refresh by themselves: right after the page loads, then every minute while the tab is open (plus a Refresh button), and again
-// the moment you switch back to the tab. So a new commit shows up without reloading the page.
-//  - the year calendar comes from a free community API (github-contributions-api.jogruber.de)
-//  - the newest public events come straight from GitHub (api.github.com/users/<name>/events/public, no key needed)
-// The community calendar can lag behind, so the last 7 days are ALSO counted from GitHub's live events;
-// whichever number is higher wins. If either service can't be reached, the panel keeps what it already shows.
-// Note: only public activity appears (commits to private repos are not in the public events).
+// Replace the old githubLive block in index.html with this whole file's content.
 (function githubLive(){
   const USER = 'arifjunaid039';
+  const LIVE_DAYS = 30; // live events fill in the last 30 days when the calendar API is behind
   const summary = document.getElementById('ghSummary');
   const scroll = document.getElementById('ghScroll');
   const legend = document.getElementById('ghLegend');
@@ -1158,32 +1153,24 @@ document.querySelectorAll('.project-card[data-demo]').forEach(card => {
   const dayKey = t => new Date(t).toISOString().slice(0, 10);
   const addDay = d => new Date(utc(d).getTime() + 86400000).toISOString().slice(0, 10);
 
-  let calendar = null;   // [{date, count, level}] from the community API
-  let events = [];       // newest public events from GitHub
-  let calendarAt = 0;    // when the calendar was last fetched
-  let firstPaint = true;
-  let blockedUntil = 0;        // after GitHub says 'rate limit', stop asking until it resets (saved, so reloads can't burn the limit again)
-  let eventsAt = 0;            // when the events were last fetched successfully (saved too: reloads inside 3 minutes reuse them)
-  let eventsFailed = false;    // true only when there is nothing to show at all
-  let eventsStale = false;     // true when the last events request failed, so what is shown is saved data
-  let busy = false;            // one refresh at a time
+  let calendar = null, events = [], calendarAt = 0, eventsAt = 0, blockedUntil = 0;
+  let firstPaint = true, eventsFailed = false, eventsStale = false, busy = false;
 
-  // keep only what the page needs from a GitHub event (also keeps the saved copy small)
   function slim(ev){
     const p = ev.payload || {};
     return { type: ev.type, created_at: ev.created_at, repo: { name: ev.repo && ev.repo.name },
-      payload: { ref: p.ref, ref_type: p.ref_type, action: p.action, size: (p.commits && p.commits.length) || p.size || 1, merged: !!(p.pull_request && p.pull_request.merged) } };
+      payload: { ref: p.ref, ref_type: p.ref_type, action: p.action,
+        size: (p.commits && p.commits.length) || p.distinct_size || p.size || 1,
+        merged: !!(p.pull_request && p.pull_request.merged) } };
   }
-  // last good answers are saved in the browser, so the section still shows them if GitHub is slow, offline or rate-limited
-  const CACHE_KEY = 'gh-live-cache-v1';
+  const CACHE_KEY = 'gh-live-cache-v2';
   function readCache(){ try { return JSON.parse(localStorage.getItem(CACHE_KEY) || 'null'); } catch (e) { return null; } }
-  function writeCache(){ try { localStorage.setItem(CACHE_KEY, JSON.stringify({ calendar: calendar, calendarAt: calendarAt, events: events.slice(0, 40), eventsAt: eventsAt, blockedUntil: blockedUntil })); } catch (e) {} }
+  function writeCache(){ try { localStorage.setItem(CACHE_KEY, JSON.stringify({ calendar, calendarAt, events: events.slice(0, 60), eventsAt, blockedUntil })); } catch (e) {} }
   function relDay(d){
     const n = Math.round((utc(dayKey(Date.now())) - utc(d)) / 86400000);
     return n <= 0 ? 'today' : n === 1 ? 'yesterday' : n + ' days ago';
   }
 
-  // how many contributions one GitHub event stands for (approximate; only used for the last 7 days)
   function eventWeight(ev){
     const p = ev.payload || {};
     switch (ev.type) {
@@ -1195,13 +1182,17 @@ document.querySelectorAll('.project-card[data-demo]').forEach(card => {
     }
   }
 
-  // calendar + live events => the days to draw
+  // calendar (or an empty year if the calendar API is down) + live events => the days to draw
   function mergedDays(){
-    const days = calendar.map(d => ({ date: d.date, count: d.count, level: d.level }));
     const today = dayKey(Date.now());
-    const since = dayKey(Date.now() - 6 * 86400000);   // live events fill in the last 7 days if the calendar is behind
+    let days;
+    if (calendar) days = calendar.map(d => ({ date: d.date, count: d.count, level: d.level }));
+    else {
+      days = [];
+      for (let i = 364; i >= 0; i--) days.push({ date: dayKey(Date.now() - i * 86400000), count: 0, level: 0 });
+    }
+    const since = dayKey(Date.now() - (LIVE_DAYS - 1) * 86400000);
 
-    // if the calendar hasn't reached today yet, add the missing empty days (and drop the same number from the start)
     let added = 0;
     while (days.length && days[days.length - 1].date < today && added < 366) {
       days.push({ date: addDay(days[days.length - 1].date), count: 0, level: 0 });
@@ -1214,11 +1205,11 @@ document.querySelectorAll('.project-card[data-demo]').forEach(card => {
       const k = dayKey(ev.created_at);
       if (k >= since) live[k] = (live[k] || 0) + eventWeight(ev);
     });
-    const max = Math.max(1, ...days.map(d => d.count));
+    const max = Math.max(1, ...days.map(d => d.count), ...Object.values(live));
     days.forEach(d => {
       if (live[d.date] && live[d.date] > d.count) {
         d.count = live[d.date];
-        d.level = Math.min(4, Math.max(1, Math.ceil(4 * d.count / Math.max(max, d.count))));
+        d.level = Math.min(4, Math.max(1, Math.ceil(4 * d.count / max)));
       }
     });
     return days;
@@ -1226,11 +1217,10 @@ document.querySelectorAll('.project-card[data-demo]').forEach(card => {
 
   function renderGraph(){
     const days = mergedDays();
-    const pad = utc(days[0].date).getUTCDay();          // blank cells so the first day lands on the right weekday row
+    const pad = utc(days[0].date).getUTCDay();
     const cols = Math.ceil((pad + days.length) / 7);
     const total = days.reduce((n, d) => n + d.count, 0);
 
-    // newest day that has at least one contribution
     let latestIdx = -1;
     days.forEach((d, i) => { if (d.count > 0) latestIdx = i; });
 
@@ -1240,7 +1230,6 @@ document.querySelectorAll('.project-card[data-demo]').forEach(card => {
       cells += '<span class="gh-cell l' + d.level + (i === latestIdx ? ' latest' : '') + '" title="' + d.count + ' contribution' + (d.count === 1 ? '' : 's') + ' on ' + label + '"></span>';
     });
 
-    // month labels: one per month change; drop a cramped first label (a month with only a sliver of columns)
     const marks = [];
     let lastMonth = -1;
     for (let c = 0; c < cols; c++) {
@@ -1257,7 +1246,6 @@ document.querySelectorAll('.project-card[data-demo]').forEach(card => {
       '<div class="gh-cells" style="grid-template-columns:repeat(' + cols + ',1fr)">' + cells + '</div>';
     graph.setAttribute('aria-label', total + ' GitHub contributions in the last year');
 
-    // total (big number) + the date of the newest contribution
     let latestLine = '';
     if (latestIdx >= 0) {
       latestLine = '<span class="gh-lastday">Latest contribution: <b>' + fmt(days[latestIdx].date, { month: 'short', day: 'numeric', year: 'numeric' }) + '</b> (' + relDay(days[latestIdx].date) + ')</span>';
@@ -1266,8 +1254,6 @@ document.querySelectorAll('.project-card[data-demo]').forEach(card => {
     scroll.hidden = false;
     legend.hidden = false;
 
-    // on narrow screens the graph scrolls sideways; open it on the most recent weeks (only the first time,
-    // so later refreshes never yank the graph while someone is scrolling it)
     if (firstPaint) {
       firstPaint = false;
       const jumpToLatest = () => { scroll.scrollLeft = scroll.scrollWidth; };
@@ -1284,8 +1270,7 @@ document.querySelectorAll('.project-card[data-demo]').forEach(card => {
         return { icon: 'fa-code-commit', verb: 'Pushed' + (branch ? ' to ' + branch + ' in' : ' to') };
       }
       case 'PullRequestEvent': {
-        const merged = p.merged;
-        const a = merged ? 'Merged' : (p.action === 'closed' ? 'Closed' : 'Opened');
+        const a = p.merged ? 'Merged' : (p.action === 'closed' ? 'Closed' : 'Opened');
         return { icon: 'fa-code-pull-request', verb: a + ' a pull request in' };
       }
       case 'CreateEvent':
@@ -1297,7 +1282,7 @@ document.querySelectorAll('.project-card[data-demo]').forEach(card => {
       case 'ForkEvent':
         return { icon: 'fa-code-fork', verb: 'Forked' };
       default:
-        return null;   // stars, watches etc. aren't contributions
+        return null;
     }
   }
 
@@ -1310,8 +1295,6 @@ document.querySelectorAll('.project-card[data-demo]').forEach(card => {
     return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   }
 
-  // Audit r13 #1: every row is ONE <a> around the icon, the sentence, the repo name and the time,
-  // so the clickable area is the whole row instead of just the repo name.
   function renderLatest(){
     list.textContent = '';
     let shown = 0;
@@ -1321,7 +1304,6 @@ document.querySelectorAll('.project-card[data-demo]').forEach(card => {
       const repoName = ev.repo.name.split('/').pop();
 
       const li = document.createElement('li');
-
       const row = document.createElement('a');
       row.className = 'gh-ev-row';
       row.href = 'https://github.com/' + ev.repo.name;
@@ -1364,7 +1346,6 @@ document.querySelectorAll('.project-card[data-demo]').forEach(card => {
   }
 
   async function loadCalendar(){
-    // the timestamp stops the browser reusing an old cached answer
     const res = await fetch('https://github-contributions-api.jogruber.de/v4/' + USER + '?y=last&t=' + Date.now(), { cache: 'no-store' });
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
@@ -1376,10 +1357,9 @@ document.querySelectorAll('.project-card[data-demo]').forEach(card => {
   }
 
   async function loadEvents(){
-    // 'no-cache' = ask GitHub every time; when nothing changed it answers 304, which is free (it doesn't use up the rate limit)
     const res = await fetch('https://api.github.com/users/' + USER + '/events/public?per_page=100', { cache: 'no-cache' });
     if (!res.ok) {
-      if (res.status === 403 || res.status === 429) {                 // rate limit: pause until GitHub says it resets
+      if (res.status === 403 || res.status === 429) {
         const reset = Number(res.headers && res.headers.get('x-ratelimit-reset'));
         blockedUntil = reset ? reset * 1000 + 5000 : Date.now() + 10 * 60 * 1000;
         writeCache();
@@ -1406,7 +1386,6 @@ document.querySelectorAll('.project-card[data-demo]').forEach(card => {
     statusText.textContent = (live ? 'Live · updated ' : 'Saved data · updated ') + ago(t);
   }
 
-  // force = the Refresh button: skip the "still fresh" shortcuts (a GitHub rate-limit pause is still respected)
   async function refresh(force){
     if (busy) return;
     busy = true;
@@ -1418,7 +1397,8 @@ document.querySelectorAll('.project-card[data-demo]').forEach(card => {
       else { eventsFailed = events.length === 0; eventsStale = true; }
       if (force || !calendar || Date.now() - calendarAt > 2 * 60 * 1000) jobs.push(loadCalendar().catch(() => {}));
       await Promise.all(jobs);
-      if (calendar) renderGraph();
+      // draw even if the calendar API failed: the graph is then built from live events
+      if (calendar || events.length) renderGraph();
       else if (firstPaint) summary.textContent = 'Contribution graph is unavailable right now. Open my GitHub profile to see it.';
       renderLatest();
     } finally {
@@ -1427,20 +1407,18 @@ document.querySelectorAll('.project-card[data-demo]').forEach(card => {
     }
   }
 
-  // 1) paint what was saved last time straight away, 2) then ask GitHub for fresh data
   const saved = readCache();
   if (saved) {
-    if (Array.isArray(saved.calendar) && saved.calendar.length && saved.calendarAt && Date.now() - saved.calendarAt < 3 * 86400000) { calendar = saved.calendar; calendarAt = saved.calendarAt; }
+    if (Array.isArray(saved.calendar) && saved.calendar.length && saved.calendarAt && Date.now() - saved.calendarAt < 86400000) { calendar = saved.calendar; calendarAt = saved.calendarAt; }
     if (Array.isArray(saved.events)) { events = saved.events; eventsAt = saved.eventsAt || 0; }
     blockedUntil = saved.blockedUntil || 0;
-    if (calendar) renderGraph();
+    if (calendar || events.length) renderGraph();
     renderLatest();
   }
   renderStatus();
   refresh();
-  // every minute while the tab is open (GitHub answers an unchanged events list with a free 304), and again the moment the tab is shown
   setInterval(() => { if (document.visibilityState === 'visible') refresh(); }, 60 * 1000);
-  setInterval(renderStatus, 30 * 1000);   // keeps 'updated 2 min ago' honest between refreshes
+  setInterval(renderStatus, 30 * 1000);
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') refresh(); });
   refreshBtn.addEventListener('click', async () => {
     refreshBtn.disabled = true; refreshBtn.classList.add('spin');
@@ -1448,7 +1426,6 @@ document.querySelectorAll('.project-card[data-demo]').forEach(card => {
     refreshBtn.classList.remove('spin'); refreshBtn.disabled = false;
   });
 })();
-
 // ---------- Scroll reveal ----------
 // threshold is 0.1 because whole card grids are now revealed as one block (they can be tall on phones)
 const revealObserver = new IntersectionObserver((entries) => {
