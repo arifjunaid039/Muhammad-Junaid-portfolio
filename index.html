@@ -43,7 +43,7 @@ h2{font-size:clamp(28px,4.4vw,44px);margin-bottom:12px}
 
 /* ambient bg */
 .bgx{position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:linear-gradient(var(--g) 1px,transparent 1px),linear-gradient(90deg,var(--g) 1px,transparent 1px);background-size:56px 56px;-webkit-mask:radial-gradient(ellipse at 50% 20%,#000 20%,transparent 75%);mask:radial-gradient(ellipse at 50% 20%,#000 20%,transparent 75%)}
-.bgx::after{content:'';position:absolute;left:0;right:0;height:180px;background:linear-gradient(transparent,color-mix(in srgb,var(--a) 14%,transparent),transparent);animation:scan 9s linear infinite}
+
 @keyframes scan{from{top:-180px}to{top:100%}}
 .orb{position:fixed;width:520px;height:520px;border-radius:50%;background:var(--a);filter:blur(140px);opacity:.1;top:-180px;right:-140px;z-index:-1;animation:dr 26s ease-in-out infinite alternate;pointer-events:none}
 @keyframes dr{to{transform:translate(-45vw,55vh)}}
@@ -80,7 +80,7 @@ nav ul a.on{color:var(--a);background:color-mix(in srgb,var(--a) 11%,transparent
 .btn:hover{transform:translateY(-2px);border-color:var(--a)}
 .btn.p{background:var(--a);color:var(--on);border-color:var(--a);position:relative;overflow:hidden}
 .btn.p:hover{box-shadow:0 12px 26px -10px var(--a)}
-.btn.p::after{content:'';position:absolute;top:0;bottom:0;width:35%;left:-50%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);animation:sw 4s ease-in-out infinite}
+
 @keyframes sw{55%,100%{left:130%}}
 .btn.sm{padding:10px 17px;font-size:14px}
 
@@ -213,7 +213,7 @@ body.light .card{box-shadow:var(--sh),inset 0 1px 0 #fff}
 /* Lab Automation dashboard mockup */
 .mock{display:block;font-size:12px;color:var(--ink)}
 .mock::after{content:none}
-.mock .w{position:absolute;inset:24px 28px 0;border-radius:14px 14px 0 0;background:var(--s);border:1px solid var(--line);box-shadow:var(--sh);overflow:hidden;animation:fl 5s ease-in-out infinite}
+.mock .w{position:absolute;inset:24px 28px 0;border-radius:14px 14px 0 0;background:var(--s);border:1px solid var(--line);box-shadow:var(--sh);overflow:hidden}
 .mock .mh{display:flex;gap:5px;align-items:center;height:26px;padding:0 11px;background:var(--s2)}
 .mock .mh i{width:7px;height:7px;border-radius:50%;background:var(--mut);opacity:.5}
 .mock .ms{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:11px}
@@ -237,10 +237,10 @@ body.light .card{box-shadow:var(--sh),inset 0 1px 0 #fff}
 .tcell{position:relative;min-height:176px;padding:34px 8px 18px;display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center;border-right:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;transition:background .3s}
 .tcell:nth-child(6n){border-right:0}
 .tcell:nth-last-child(-n+6){border-bottom:0}
-.tcell i{font-size:40px;line-height:1;animation:ff 5s ease-in-out infinite;animation-delay:calc(var(--i)*-.35s);transition:transform .3s}
+.tcell i{font-size:40px;line-height:1;transition:transform .3s}
 .tcell i.a{color:var(--a)}.tcell i.n{color:var(--ink)}
 .tcell span{font:400 12.5px/1.6 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);transition:color .3s}
-.tcell::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 30%,color-mix(in srgb,var(--a) 18%,transparent),transparent 68%);opacity:0;pointer-events:none;animation:lit 7.2s ease-in-out infinite;animation-delay:calc(var(--i)*.4s)}
+.tcell::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 30%,color-mix(in srgb,var(--a) 18%,transparent),transparent 68%);opacity:0;pointer-events:none}
 @keyframes lit{0%{opacity:0}4%{opacity:1}12%{opacity:0}100%{opacity:0}}
 @keyframes ff{50%{transform:translateY(-5px)}}
 .tcell:hover{background:color-mix(in srgb,var(--a) 7%,transparent)}
@@ -257,7 +257,7 @@ body.light .card{box-shadow:var(--sh),inset 0 1px 0 #fff}
 <div id="ld" role="status" aria-label="Loading">
   <div class="ldi"><div class="mk">JA</div><div class="bar"><i id="ldb"></i></div><div class="ldt"><span>Loading portfolio</span><span id="ldp">0%</span></div></div>
 </div>
-<div class="bgx"></div><div class="orb"></div>
+<div class="bgx"></div>
 
 <nav><div class="wrap">
   <a href="#home" class="logo"><b>JA</b>Junaid Arif</a>
@@ -277,19 +277,19 @@ body.light .card{box-shadow:var(--sh),inset 0 1px 0 #fff}
     <h1>Hi, I'm <span>Junaid Arif</span></h1>
     <p class="role">Frontend &amp; Laravel Developer</p>
     <p class="meta"><span><i class="fa-solid fa-location-dot"></i>Based in Pakistan</span><span><i class="fa-solid fa-circle-check"></i>6 projects shipped</span></p>
-    <p class="d">I build responsive, dynamic web applications with <b>HTML, CSS, JavaScript, PHP, Laravel and MySQL</b>, turning real-world problems into clean, functional systems. I led my group in <b>TechWiz 7</b> with <b>Laravel</b> and I'm learning <b>C#, ASP.NET, .NET and ASP.NET Core</b>, along with <b>AI assistant full-stack development</b>.</p>
+    <p class="d">I build <b>Laravel and MySQL</b> web apps with real admin dashboards, search and PDF reports, like a lab testing system that generates 12-digit test IDs. I led my group at <b>TechWiz 7</b> and I'm now learning <b>C# and ASP.NET Core</b>.</p>
     <div class="cta"><a href="#projects" class="btn p">View Projects <i class="fa-solid fa-arrow-right"></i></a><a href="assets/Junaid-Arif-CV.pdf" download class="btn">Download CV <i class="fa-solid fa-download"></i></a></div>
   </div>
   <div class="hv rv">
-    <span class="fc t"><i class="fa-brands fa-laravel"></i>6 projects shipped</span>
+    <span class="fc t"><i class="fa-brands fa-laravel"></i>4 full-stack systems</span>
     <div class="card hc">
-      <div class="hh"><div class="av">JA</div><div><h3>Junaid Arif</h3><p><i></i>Open to internships</p></div></div>
-      <div class="nw"><span class="ico"><i class="fa-solid fa-hammer"></i></span><div><small>Building</small><b>Lab Automation (SBS Labs)</b></div></div>
+      <div class="hh"><div class="av">JA</div><div><h3>Junaid Arif</h3><p><i></i>Aptech student · Pakistan</p></div></div>
+      <div class="nw"><span class="ico"><i class="fa-solid fa-hammer"></i></span><div><small>Latest project</small><b>Lab Automation (SBS Labs)</b></div></div>
       <div class="nw"><span class="ico"><i class="fa-solid fa-graduation-cap"></i></span><div><small>Learning</small><b>ASP.NET Core &amp; C#</b></div></div>
       <div class="nw"><span class="ico"><i class="fa-solid fa-users"></i></span><div><small>Leading</small><b>TechWiz 7 · Vision Project 2026</b></div></div>
       <div class="tags"><span>Laravel</span><span>PHP</span><span>MySQL</span><span>JavaScript</span></div>
     </div>
-    <span class="fc b"><i class="fa-solid fa-wand-magic-sparkles"></i>AI assistant full-stack</span>
+    <span class="fc b"><i class="fa-solid fa-code-branch"></i>Led 2 teams</span>
   </div>
   </div></header>
 
@@ -298,11 +298,11 @@ body.light .card{box-shadow:var(--sh),inset 0 1px 0 #fff}
 </div></div>
 
 <section id="about"><div class="wrap">
-  <div class="rv sh"><h2>Full-stack web developer &amp; tech enthusiast</h2></div>
+  <div class="rv sh"><h2>Frontend roots, Laravel systems</h2></div>
   <div class="about rv">
     <div>
       <p>I'm a web developer based in Pakistan, currently building my skills as a student at Aptech. My journey started with responsive frontend interfaces and has grown into full, database-driven applications with Laravel and MySQL.</p>
-      <p>I like turning real-world problems into clean, functional systems, like <b>BackToYou</b>, a Lost &amp; Found platform, a <b>Lab Automation</b> system for product testing, and a Corona Test &amp; Vaccination Management System handling live patient data and admin workflows.</p>
+      <p>My strongest work so far: <b>BackToYou</b>, a Lost &amp; Found platform with in-app messaging and claim tracking, <b>Lab Automation</b>, which manages product tests and PDF reports, and a Corona Test &amp; Vaccination System with appointment booking and an admin dashboard.</p>
       <p>I'm also stepping into leadership: I led <b>Vision Project 2026</b> as project leader and took it to the exhibition, and I led my group in <b>TechWiz 7</b> as group leader.</p>
       <p>Right now I'm expanding into the <b>.NET ecosystem</b> with <b>C#, ASP.NET and ASP.NET Core</b> alongside my PHP &amp; Laravel work. I'm also learning <b>AI assistant full-stack development</b>: building full-stack apps with AI assistants to ship faster and add smarter features.</p>
     </div>
@@ -319,9 +319,9 @@ body.light .card{box-shadow:var(--sh),inset 0 1px 0 #fff}
     <div class="techh">
       <p class="mono">What I use</p>
       <h2>Technologies I work with</h2>
-      <p class="mono d2">A stack I use to ship clean, responsive and database-driven web apps, now growing into .NET and AI assistant full-stack development.</p>
+      <p class="mono d2">The tools behind my projects. Laravel and MySQL every day, C# and ASP.NET Core next.</p>
     </div>
-    <div class="tg"><div class="tcell" style="--i:0"><i class="devicon-html5-plain colored" aria-hidden="true"></i><span>HTML5</span></div><div class="tcell" style="--i:1"><i class="devicon-css3-plain colored" aria-hidden="true"></i><span>CSS3</span></div><div class="tcell" style="--i:2"><i class="devicon-javascript-plain colored" aria-hidden="true"></i><span>JavaScript</span></div><div class="tcell" style="--i:3"><i class="devicon-typescript-plain colored" aria-hidden="true"></i><span>TypeScript</span></div><div class="tcell" style="--i:4"><i class="devicon-bootstrap-plain colored" aria-hidden="true"></i><span>Bootstrap</span></div><div class="tcell" style="--i:5"><i class="devicon-jquery-plain colored" aria-hidden="true"></i><span>jQuery</span></div><div class="tcell" style="--i:6"><i class="devicon-php-plain colored" aria-hidden="true"></i><span>PHP</span></div><div class="tcell" style="--i:7"><i class="devicon-laravel-plain colored" aria-hidden="true"></i><span>Laravel</span></div><div class="tcell" style="--i:8"><i class="devicon-mysql-plain colored" aria-hidden="true"></i><span>MySQL</span></div><div class="tcell" style="--i:9"><i class="fa-solid fa-database a" aria-hidden="true"></i><span>SQL</span></div><div class="tcell" style="--i:10"><i class="devicon-csharp-plain colored" aria-hidden="true"></i><span>C#</span></div><div class="tcell" style="--i:11"><i class="devicon-dotnetcore-plain colored" aria-hidden="true"></i><span>ASP.NET Core</span></div><div class="tcell" style="--i:12"><i class="devicon-git-plain colored" aria-hidden="true"></i><span>Git</span></div><div class="tcell" style="--i:13"><i class="devicon-github-original n" aria-hidden="true"></i><span>GitHub</span></div><div class="tcell" style="--i:14"><i class="devicon-vscode-plain colored" aria-hidden="true"></i><span>VS Code</span></div><div class="tcell" style="--i:15"><i class="devicon-wordpress-plain colored" aria-hidden="true"></i><span>WordPress</span></div><div class="tcell" style="--i:16"><i class="fa-solid fa-server a" aria-hidden="true"></i><span>XAMPP / WAMP</span></div><div class="tcell" style="--i:17"><i class="fa-solid fa-wand-magic-sparkles a" aria-hidden="true"></i><span>AI Assistant Dev</span></div></div>
+    <div class="tg"><div class="tcell" style="--i:0"><i class="devicon-html5-plain colored" aria-hidden="true"></i><span>HTML5</span></div><div class="tcell" style="--i:1"><i class="devicon-css3-plain colored" aria-hidden="true"></i><span>CSS3</span></div><div class="tcell" style="--i:2"><i class="devicon-javascript-plain colored" aria-hidden="true"></i><span>JavaScript</span></div><div class="tcell" style="--i:3"><i class="devicon-typescript-plain colored" aria-hidden="true"></i><span>TypeScript</span></div><div class="tcell" style="--i:4"><i class="devicon-bootstrap-plain colored" aria-hidden="true"></i><span>Bootstrap</span></div><div class="tcell" style="--i:5"><i class="devicon-jquery-plain colored" aria-hidden="true"></i><span>jQuery</span></div><div class="tcell" style="--i:6"><i class="devicon-php-plain colored" aria-hidden="true"></i><span>PHP</span></div><div class="tcell" style="--i:7"><i class="devicon-laravel-plain colored" aria-hidden="true"></i><span>Laravel</span></div><div class="tcell" style="--i:8"><i class="devicon-mysql-plain colored" aria-hidden="true"></i><span>MySQL</span></div><div class="tcell" style="--i:9"><i class="fa-solid fa-database a" aria-hidden="true"></i><span>SQL</span></div><div class="tcell" style="--i:10"><i class="devicon-csharp-plain colored" aria-hidden="true"></i><span>C#</span></div><div class="tcell" style="--i:11"><i class="devicon-dotnetcore-plain colored" aria-hidden="true"></i><span>ASP.NET Core</span></div><div class="tcell" style="--i:12"><i class="devicon-git-plain colored" aria-hidden="true"></i><span>Git</span></div><div class="tcell" style="--i:13"><i class="devicon-github-original n" aria-hidden="true"></i><span>GitHub</span></div><div class="tcell" style="--i:14"><i class="devicon-vscode-plain colored" aria-hidden="true"></i><span>VS Code</span></div><div class="tcell" style="--i:15"><i class="devicon-wordpress-plain colored" aria-hidden="true"></i><span>WordPress</span></div><div class="tcell" style="--i:16"><i class="fa-solid fa-server a" aria-hidden="true"></i><span>XAMPP / WAMP</span></div><div class="tcell" style="--i:17"><i class="fa-solid fa-wand-magic-sparkles a" aria-hidden="true"></i><span>AI Assistant Dev</span></div></div></div>
   </div>
 </div></section>
 
@@ -403,7 +403,7 @@ body.light .card{box-shadow:var(--sh),inset 0 1px 0 #fff}
 </div></section>
 
 <section id="contact"><div class="wrap">
-  <div class="rv sh"><h2>Let's create something amazing</h2><p class="lead">Have a project in mind, an internship opportunity, or just want to say hi? Reach out. I usually reply within a day.</p></div>
+  <div class="rv sh"><h2>Got a project or internship in mind?</h2><p class="lead">Looking for an intern, or need a Laravel app built? Reach out. I usually reply within a day.</p></div>
   <div class="card ct rv">
     <a class="row" href="tel:03182513504"><span class="ico"><i class="fa-solid fa-phone"></i></span><div><small>Phone</small><b>0318-2513504</b></div><button type="button" data-copy="03182513504" aria-label="Copy phone number">Copy</button></a>
     <a class="row" id="mail" href="#"><span class="ico"><i class="fa-solid fa-envelope"></i></span><div><small>Email</small><b id="mv"></b></div><button type="button" id="mc" aria-label="Copy email address">Copy</button></a>
