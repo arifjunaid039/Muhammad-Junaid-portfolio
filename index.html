@@ -84,15 +84,24 @@ nav ul a.on{color:var(--a);background:color-mix(in srgb,var(--a) 11%,transparent
 @keyframes sw{55%,100%{left:130%}}
 .btn.sm{padding:10px 17px;font-size:14px}
 
-/* terminal */
-.term{border-radius:18px;background:var(--s);border:1px solid var(--line);box-shadow:var(--sh);overflow:hidden;animation:fl 6s ease-in-out infinite}
-.tb{display:flex;align-items:center;gap:7px;padding:13px 16px;border-bottom:1px solid var(--line);background:var(--s2)}
-.tb i{width:11px;height:11px;border-radius:50%;background:#ff5f57}.tb i:nth-child(2){background:#febc2e}.tb i:nth-child(3){background:#28c840}
-.tb span{margin-left:10px;font-size:12.5px;color:var(--mut)}
-.tc{padding:20px 22px;font:500 14px/1.8 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;min-height:290px;white-space:pre-wrap;color:var(--ink)}
-.tc .k{color:var(--a)}.tc .c{color:var(--mut)}.tc .s{color:#f59e0b}
-.cr{display:inline-block;width:8px;height:1.1em;background:var(--a);vertical-align:-.2em;animation:bl 1s steps(1) infinite}
-@keyframes bl{50%{opacity:0}}
+/* hero profile card */
+.hv{position:relative;padding:18px 0}
+.hc{padding:26px}
+.hc:hover{transform:none}
+.hh{display:flex;align-items:center;gap:16px;padding-bottom:18px}
+.av{width:60px;height:60px;border-radius:18px;display:grid;place-items:center;flex-shrink:0;font:800 22px 'Sora';background:linear-gradient(135deg,var(--a),var(--a2));color:var(--on)}
+.hh h3{font-size:19px}
+.hh p{color:var(--mut);font-size:14px;display:flex;align-items:center;gap:8px;margin-top:2px}
+.hh p i{width:8px;height:8px;border-radius:50%;background:#22c55e;animation:pg 1.8s infinite}
+.nw{position:relative;z-index:1;display:flex;align-items:center;gap:14px;padding:14px 0;border-top:1px solid var(--line)}
+.nw .ico{margin:0;width:42px;height:42px;font-size:16px;flex-shrink:0}
+.nw small{display:block;color:var(--mut);font:400 11.5px 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase}
+.nw b{font-weight:600;line-height:1.35;display:block}
+.hc .tags{margin:6px 0 0;padding-top:16px;border-top:1px solid var(--line);position:relative;z-index:1}
+.fc{position:absolute;z-index:2;display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:99px;background:var(--s);border:1px solid var(--line);box-shadow:var(--sh);font:600 13px 'Plus Jakarta Sans';animation:fl 5s ease-in-out infinite}
+.fc i{color:var(--a)}
+.fc.t{top:0;right:22px}
+.fc.b{bottom:0;left:22px;animation-delay:-2.5s}
 
 /* marquee */
 .mq{overflow:hidden;border-block:1px solid var(--line);padding:15px 0;-webkit-mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
@@ -147,42 +156,6 @@ nav ul a.on{color:var(--a);background:color-mix(in srgb,var(--a) 11%,transparent
 .tags{display:flex;flex-wrap:wrap;gap:7px;margin:16px 0 20px}
 .tags span{font-size:12px;font-weight:500;padding:4px 11px;border-radius:99px;border:1px solid var(--line);color:var(--mut)}
 .pb .btn{align-self:flex-start}
-
-/* github */
-.gh{padding:28px;margin-top:22px}
-.gh:hover{transform:none}
-.gh h3{font-size:24px;text-align:center}
-#ghS{text-align:center;color:var(--mut);margin-top:6px}
-#ghS .tot{font:800 34px 'Sora';color:var(--a);margin-right:8px}
-#ghS small{display:block;font-size:13px}
-.st2{display:flex;gap:12px;align-items:center;justify-content:center;margin-top:10px;font-size:13px;color:var(--mut)}
-.st2 i{display:inline-block;width:8px;height:8px;border-radius:50%;background:#22c55e;margin-right:7px;animation:pg 1.8s infinite}
-.st2.old i{background:#7a869c;animation:none}
-.rf{padding:5px 13px;border-radius:99px;border:1px solid var(--line);background:none;color:var(--ink);cursor:pointer;font:600 13px 'Plus Jakarta Sans'}
-.rf:hover{border-color:var(--a);color:var(--a)}
-#ghG{margin-top:22px;overflow-x:auto;padding-bottom:6px;position:relative;z-index:1}
-.gm{display:grid;gap:4px;font-size:12px;color:var(--mut);margin-bottom:8px}
-.gc{display:grid;grid-template-rows:repeat(7,auto);grid-auto-flow:column;gap:4px}
-.gi{display:block;aspect-ratio:1;border-radius:4px;background:var(--s2);border:1px solid var(--line)}
-.gi.pad{visibility:hidden}
-.gi.l1{background:color-mix(in srgb,var(--a) 28%,var(--s2));border-color:transparent}
-.gi.l2{background:color-mix(in srgb,var(--a) 52%,var(--s2));border-color:transparent}
-.gi.l3{background:color-mix(in srgb,var(--a) 76%,var(--s2));border-color:transparent}
-.gi.l4{background:var(--a);border-color:transparent}
-.gi.last{box-shadow:0 0 0 2px var(--s),0 0 0 4px var(--ink);animation:tw 1.6s ease-in-out infinite}
-@keyframes tw{50%{opacity:.5}}
-.gl{margin-top:12px;display:flex;justify-content:flex-end;align-items:center;gap:5px;font-size:12px;color:var(--mut);position:relative;z-index:1}.gl .gi{width:13px}
-.lat{margin-top:20px;padding-top:20px;border-top:1px solid var(--line);position:relative;z-index:1}
-.lat p{text-align:center;font-weight:700}
-.lat ul{list-style:none;display:grid;gap:10px;margin:16px auto 0;max-width:540px}
-@media(min-width:1000px){.lat ul{max-width:none;grid-template-columns:1fr 1fr}}
-.lat li a{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;color:var(--mut);transition:.2s;height:100%}
-.lat li a:hover{border-color:var(--a);background:color-mix(in srgb,var(--a) 7%,transparent)}
-.lat li b{color:var(--ink);font-weight:600}.lat li a:hover b{color:var(--a)}
-.lat .ei{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;flex-shrink:0;color:var(--a);background:color-mix(in srgb,var(--a) 12%,transparent);font-size:13px}
-.lat .e{flex:1;min-width:0;overflow-wrap:anywhere}.lat .tm{font-size:13px;white-space:nowrap}
-.lat .em{text-align:center;color:var(--mut);padding:10px}
-.ghf{text-align:center;margin-top:22px;position:relative;z-index:1}
 
 /* leadership */
 .ld{display:flex;flex-direction:column}
@@ -251,6 +224,7 @@ body.light .card{box-shadow:var(--sh),inset 0 1px 0 #fff}
 .mock .ok{background:color-mix(in srgb,#22c55e 16%,transparent);color:#22c55e}
 .mock .wip{background:color-mix(in srgb,#f59e0b 16%,transparent);color:#f59e0b;animation:tw 1.6s ease-in-out infinite}
 .mock .pd{background:var(--s2);color:var(--mut)}
+@keyframes tw{50%{opacity:.5}}
 
 /* ===== Technologies grid ===== */
 #skills{padding:70px 0}
@@ -299,18 +273,25 @@ body.light .card{box-shadow:var(--sh),inset 0 1px 0 #fff}
 
 <header class="hero" id="home"><div class="wrap">
   <div>
-    <span class="pill"><i></i> Available for freelance projects &amp; internships</span>
+    <span class="pill"><i></i> Learning ASP.NET Core · open to internships</span>
     <h1>Hi, I'm <span>Junaid Arif</span></h1>
     <p class="role">Frontend &amp; Laravel Developer</p>
     <p class="meta"><span><i class="fa-solid fa-location-dot"></i>Based in Pakistan</span><span><i class="fa-solid fa-circle-check"></i>6 projects shipped</span></p>
     <p class="d">I build responsive, dynamic web applications with <b>HTML, CSS, JavaScript, PHP, Laravel and MySQL</b>, turning real-world problems into clean, functional systems. I led my group in <b>TechWiz 7</b> with <b>Laravel</b> and I'm learning <b>C#, ASP.NET, .NET and ASP.NET Core</b>, along with <b>AI assistant full-stack development</b>.</p>
     <div class="cta"><a href="#projects" class="btn p">View Projects <i class="fa-solid fa-arrow-right"></i></a><a href="assets/Junaid-Arif-CV.pdf" download class="btn">Download CV <i class="fa-solid fa-download"></i></a></div>
   </div>
-  <div class="term" aria-hidden="true">
-    <div class="tb"><i></i><i></i><i></i><span>junaid.js</span></div>
-    <div class="tc"><span id="tt"></span><span class="cr"></span></div>
+  <div class="hv rv">
+    <span class="fc t"><i class="fa-brands fa-laravel"></i>6 projects shipped</span>
+    <div class="card hc">
+      <div class="hh"><div class="av">JA</div><div><h3>Junaid Arif</h3><p><i></i>Open to internships</p></div></div>
+      <div class="nw"><span class="ico"><i class="fa-solid fa-hammer"></i></span><div><small>Building</small><b>Lab Automation (SBS Labs)</b></div></div>
+      <div class="nw"><span class="ico"><i class="fa-solid fa-graduation-cap"></i></span><div><small>Learning</small><b>ASP.NET Core &amp; C#</b></div></div>
+      <div class="nw"><span class="ico"><i class="fa-solid fa-users"></i></span><div><small>Leading</small><b>TechWiz 7 · Vision Project 2026</b></div></div>
+      <div class="tags"><span>Laravel</span><span>PHP</span><span>MySQL</span><span>JavaScript</span></div>
+    </div>
+    <span class="fc b"><i class="fa-solid fa-wand-magic-sparkles"></i>AI assistant full-stack</span>
   </div>
-</div></header>
+  </div></header>
 
 <div class="mq" aria-hidden="true"><div class="t" data-dup>
   <span>Laravel</span><span>PHP</span><span>MySQL</span><span>JavaScript</span><span>Bootstrap</span><span>C#</span><span>ASP.NET Core</span><span>AI Assistant Full-Stack</span><span>Git</span>
@@ -328,7 +309,7 @@ body.light .card{box-shadow:var(--sh),inset 0 1px 0 #fff}
     <div class="stats">
       <div class="card stat"><strong data-n="6">0</strong>Projects shipped</div>
       <div class="card stat"><strong data-n="4">0</strong>Full-stack systems built</div>
-      <div class="card stat"><strong id="repoN">…</strong>Public GitHub repos</div>
+      <div class="card stat"><strong data-n="2">0</strong>Teams led</div>
     </div>
   </div>
 </div></section>
@@ -394,16 +375,6 @@ body.light .card{box-shadow:var(--sh),inset 0 1px 0 #fff}
       <div class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Bootstrap</span><span>jQuery</span></div>
       <a class="btn p sm" href="https://github.com/arifjunaid039/Wheels-Motor" target="_blank" rel="noreferrer"><i class="fa-brands fa-github"></i> View code on GitHub</a></div></article>
   </div>
-
-  <div class="card gh rv">
-    <h3>GitHub Activity</h3>
-    <p id="ghS">Loading contributions…</p>
-    <div class="st2" id="ghT" hidden><span><i></i><span id="ghTx"></span></span><button class="rf" id="ghR" type="button">Refresh</button></div>
-    <div id="ghG" hidden></div>
-    <div class="gl" id="ghLg" hidden>Less <span class="gi"></span><span class="gi l1"></span><span class="gi l2"></span><span class="gi l3"></span><span class="gi l4"></span> More</div>
-    <div class="lat" id="ghL" hidden><p>Latest Activity</p><ul id="ghU"></ul></div>
-    <div class="ghf"><a class="btn p sm" href="https://github.com/arifjunaid039" target="_blank" rel="noreferrer"><i class="fa-brands fa-github"></i> View GitHub profile</a></div>
-  </div>
 </div></section>
 
 <section id="leadership"><div class="wrap">
@@ -464,30 +435,6 @@ nv.querySelectorAll('a').forEach(a=>a.onclick=()=>nv.classList.remove('open'));
 // ---- marquee duplicate ----
 document.querySelectorAll('[data-dup]').forEach(t=>{const h=t.innerHTML;t.innerHTML=h+h+h+h});
 
-// ---- endless terminal typing ----
-const code=[
-['<span class="c">// junaid.js</span>'],
-['<span class="k">const</span> junaid = {'],
-['  role: <span class="s">"Frontend &amp; Laravel Developer"</span>,'],
-['  stack: [<span class="s">"Laravel"</span>, <span class="s">"PHP"</span>, <span class="s">"MySQL"</span>, <span class="s">"JS"</span>],'],
-['  learning: [<span class="s">".NET"</span>, <span class="s">"AI Assistant Full-Stack"</span>],'],
-['  leader: <span class="s">"TechWiz 7"</span>,'],
-['  openToWork: <span class="k">true</span>'],
-['};'],
-['<span class="c">// let\'s build something together</span>']];
-const tt=document.getElementById('tt');
-(function run(){let li=0,done='';
-  function line(){if(li>=code.length){setTimeout(()=>{tt.innerHTML='';run()},3200);return}
-    const html=code[li][0],tmp=document.createElement('div');tmp.innerHTML=html;const txt=tmp.textContent;
-    // reveal by characters while keeping the highlighted markup
-    let n=0;(function ch(){n++;let shown=0,out='',i=0;
-      const nodes=[...tmp.childNodes];out='';
-      for(const nd of nodes){const s=nd.textContent;if(shown+s.length<=n){out+=nd.nodeType===1?nd.outerHTML:s.replace(/&/g,'&amp;').replace(/</g,'&lt;');shown+=s.length}
-        else{const part=s.slice(0,n-shown).replace(/&/g,'&amp;').replace(/</g,'&lt;');out+=nd.nodeType===1?`<span class="${nd.className}">${part}</span>`:part;shown=n;break}}
-      tt.innerHTML=done+out;
-      if(n<txt.length)setTimeout(ch,28);else{done+=html+'\n';li++;setTimeout(line,260)}})()}
-  line()})();
-
 // ---- reveal, count-up, spotlight, nav, back-to-top ----
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.08});
 document.querySelectorAll('.rv').forEach(x=>io.observe(x));
@@ -503,106 +450,6 @@ const EMAIL=['arifjunaid039','gmail.com'].join('@');
 document.getElementById('mv').textContent=EMAIL;document.getElementById('mail').href='mailto:'+EMAIL;
 function cp(b,v){b.addEventListener('click',async e=>{e.preventDefault();e.stopPropagation();try{await navigator.clipboard.writeText(v)}catch(_){}const o=b.textContent;b.textContent='Copied!';setTimeout(()=>b.textContent=o,1800)})}
 document.querySelectorAll('[data-copy]').forEach(b=>cp(b,b.dataset.copy));cp(document.getElementById('mc'),EMAIL);
-
-// ===== GitHub: contribution graph + latest activity (live) =====
-(()=>{const U='arifjunaid039',$=id=>document.getElementById(id);
-const S=$('ghS'),T=$('ghT'),TX=$('ghTx'),G=$('ghG'),LG=$('ghLg'),L=$('ghL'),UL=$('ghU'),R=$('ghR');
-const utc=d=>new Date(d+'T00:00:00Z'),key=t=>new Date(t).toISOString().slice(0,10);
-const fmt=(d,o)=>utc(d).toLocaleDateString('en-US',Object.assign({timeZone:'UTC'},o));
-const add=d=>new Date(utc(d).getTime()+864e5).toISOString().slice(0,10);
-let cal=null,ev=[],evAt=0,calAt=0,blocked=0,stale=false,first=true,busy=false;
-const wt=e=>{const p=e.payload||{};return e.type==='PushEvent'?(p.commits?p.commits.length:p.size||1):(e.type==='PullRequestEvent'||e.type==='IssuesEvent')&&p.action==='opened'?1:e.type==='CreateEvent'&&p.ref_type==='repository'?1:0};
-function days(){const today=key(Date.now());let d;
-  if(cal)d=cal.map(x=>({date:x.date,count:x.count,level:x.level}));
-  else{d=[];for(let i=364;i>=0;i--)d.push({date:key(Date.now()-i*864e5),count:0,level:0})}
-  while(d[d.length-1].date<today)d.push({date:add(d[d.length-1].date),count:0,level:0});
-  d=d.slice(-365);
-  const since=key(Date.now()-29*864e5),live={};
-  const max=Math.max(1,...d.map(x=>x.count),...Object.values(live));
-  d.forEach(x=>{if(live[x.date]>x.count){x.count=live[x.date];x.level=Math.min(4,Math.max(1,Math.ceil(4*x.count/max)))}});
-  return d}
-function graph(){const d=days(),pad=utc(d[0].date).getUTCDay(),cols=Math.ceil((pad+d.length)/7),tot=d.reduce((n,x)=>n+x.count,0);
-  let last=-1;d.forEach((x,i)=>{if(x.count>0)last=i});
-  let cells='<span class="gi pad"></span>'.repeat(pad);
-  d.forEach((x,i)=>cells+=`<span class="gi l${x.level}${i===last?' last':''}" title="${x.count} contribution${x.count===1?'':'s'} on ${fmt(x.date,{month:'short',day:'numeric',year:'numeric'})}"></span>`);
-  const m=[];let lm=-1;
-  for(let c=0;c<cols;c++){const x=d[Math.max(0,c*7-pad)],mo=utc(x.date).getUTCMonth();if(mo!==lm)m.push({c,n:fmt(x.date,{month:'short'})});lm=mo}
-  if(m.length>1&&m[1].c-m[0].c<3)m.shift();
-  G.innerHTML=`<div style="min-width:900px"><div class="gm" style="grid-template-columns:repeat(${cols},1fr)">${m.map(k=>`<span style="grid-column:${k.c+1}/span 3">${k.n}</span>`).join('')}</div><div class="gc" style="grid-template-columns:repeat(${cols},1fr)">${cells}</div></div>`;
-  S.innerHTML=`<span class="tot">${tot.toLocaleString('en-US')}</span>contributions in the last year`+(last>=0?`<small>Latest contribution: <b>${fmt(d[last].date,{month:'short',day:'numeric',year:'numeric'})}</b></small>`:'');
-  G.hidden=LG.hidden=false;
-  if(first){first=false;const j=()=>{G.scrollLeft=G.scrollWidth};requestAnimationFrame(j);addEventListener('load',j)}}
-function desc(e){const p=e.payload||{};
-  switch(e.type){
-    case'PushEvent':{const b=(p.ref||'').replace('refs/heads/','');return['fa-code-commit','Pushed'+(b?' to '+b+' in':' to')]}
-    case'PullRequestEvent':return['fa-code-pull-request',(p.merged?'Merged':p.action==='closed'?'Closed':'Opened')+' a pull request in'];
-    case'CreateEvent':return p.ref_type==='repository'?['fa-folder-plus','Created repository']:p.ref_type==='branch'?['fa-code-branch','Created branch '+(p.ref||'')+' in']:null;
-    case'IssuesEvent':return['fa-circle-dot',(p.action==='closed'?'Closed':'Opened')+' an issue in'];
-    case'ForkEvent':return['fa-code-fork','Forked'];
-    default:return null}}
-function ago(iso){const s=(Date.now()-new Date(iso))/1e3;if(s<3600)return Math.max(1,Math.round(s/60))+' min ago';if(s<86400)return Math.round(s/3600)+' h ago';const d=Math.round(s/86400);return d<30?d+(d===1?' day ago':' days ago'):new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric'})}
-function latest(){UL.textContent='';let n=0;
-  for(const r of ev){const cr=r.created&&Math.abs(new Date(r.pushed)-new Date(r.created))<36e5,verb=r.created===null?'Updated':cr?'Created repository':'Pushed to';
-    const li=document.createElement('li'),a=document.createElement('a');a.href='https://github.com/'+U+'/'+r.name;a.target='_blank';a.rel='noreferrer';
-    const ic=document.createElement('span');ic.className='ei';ic.innerHTML='<i class="fa-solid '+(cr?'fa-folder-plus':'fa-code-commit')+'"></i>';
-    const t=document.createElement('span');t.className='e';t.append(verb+' ');const b=document.createElement('b');b.textContent=r.name;t.append(b);
-    const tm=document.createElement('span');tm.className='tm';tm.textContent=ago(r.pushed);
-    a.append(ic,t,tm);li.append(a);UL.append(li);if(++n===6)break}
-  if(!n&&!ev.length&&stale){const li=document.createElement('li');li.className='em';li.textContent="Couldn't reach GitHub right now. Open my GitHub profile to see the latest activity.";UL.append(li);L.hidden=false}
-  else L.hidden=!n}
-function status(){const t=evAt||calAt;if(!t){T.hidden=true;return}
-  const live=!stale&&evAt&&Date.now()-evAt<6e5,s=(Date.now()-t)/1e3;
-  T.hidden=false;T.classList.toggle('old',!live);
-  TX.textContent=(live?'Live · updated ':'Saved data · updated ')+(s<45?'just now':s<3600?Math.round(s/60)+' min ago':Math.round(s/3600)+' h ago')}
-const PX=[u=>'https://corsproxy.io/?url='+encodeURIComponent(u),u=>'https://api.allorigins.win/raw?url='+encodeURIComponent(u),u=>'https://api.codetabs.com/v1/proxy?quest='+encodeURIComponent(u)];
-function parseGh(h){const doc=new DOMParser().parseFromString(h,'text/html'),tips={},out=[];
-  doc.querySelectorAll('tool-tip').forEach(t=>tips[t.getAttribute('for')]=t.textContent.trim());
-  doc.querySelectorAll('td[data-date]').forEach(td=>{const m=(tips[td.id]||'').match(/^(\d+)\s+contribution/i),lv=+td.getAttribute('data-level')||0;out.push({date:td.getAttribute('data-date'),count:m?+m[1]:(lv>0?1:0)})});
-  if(!out.length)throw 0;return out}
-function ghPage(){const u='https://github.com/users/'+U+'/contributions?from='+key(Date.now()-364*864e5)+'&to='+key(Date.now())+'&_='+Date.now();
-  return Promise.any(PX.map(p=>fetch(p(u),{cache:'no-store'}).then(r=>r.ok?r.text():Promise.reject()).then(parseGh)))}
-async function loadCal(){
-  const res=await Promise.allSettled([
-    ghPage(),
-    fetch('https://github-contributions-api.jogruber.de/v4/'+U+'?y=last&t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject()).then(j=>j.contributions)]);
-  const m=new Map();
-  res.forEach(r=>{if(r.status==='fulfilled'&&Array.isArray(r.value))r.value.forEach(x=>{const c=+x.count||0;if(x.date&&(!m.has(x.date)||c>m.get(x.date)))m.set(x.date,c)})});
-  if(!m.size)throw 0;
-  const mx=Math.max(1,...m.values());
-  cal=[...m.entries()].sort((a,b)=>a[0].localeCompare(b[0])).map(([date,count])=>({date,count,level:count<=0?0:Math.min(4,Math.max(1,Math.ceil(4*count/mx)))}));
-  calAt=Date.now()}
-function repoPage(){const u='https://github.com/'+U+'?tab=repositories&_='+Date.now();
-  return Promise.any(PX.map(p=>fetch(p(u),{cache:'no-store'}).then(r=>r.ok?r.text():Promise.reject()).then(h=>{
-    const doc=new DOMParser().parseFromString(h,'text/html'),out=[];
-    doc.querySelectorAll('li[itemprop="owns"]').forEach(li=>{const a=li.querySelector('[itemprop="name codeRepository"]'),t=li.querySelector('relative-time');if(a&&t)out.push({name:a.textContent.trim(),pushed:t.getAttribute('datetime'),created:null})});
-    if(!out.length)throw 0;return out})))}
-async function loadEv(){let list=null;
-  if(Date.now()>=blocked){try{const r=await fetch('https://api.github.com/users/'+U+'/repos?per_page=100&sort=pushed&_='+Date.now(),{cache:'no-store'});
-    if(!r.ok){if(r.status===403||r.status===429){const x=+r.headers.get('x-ratelimit-reset');blocked=x?x*1e3+5e3:Date.now()+6e5}throw 0}
-    const j=await r.json();if(!Array.isArray(j))throw 0;
-    list=j.map(x=>({name:x.name,pushed:x.pushed_at||x.created_at,created:x.created_at}))}catch(e){}}
-  if(!list)list=await repoPage();
-  list.sort((a,b)=>new Date(b.pushed)-new Date(a.pushed));
-  ev=list;stale=false;evAt=Date.now();setRepos(list.length);try{localStorage.setItem('gh-repos',list.length)}catch(e){}}
-async function refresh(force){if(busy)return;busy=true;
-  try{const jobs=[];
-    if(force||!ev.length||Date.now()-evAt>45e3)jobs.push(loadEv().catch(()=>{stale=true;if(shownRepos===null)RN.textContent='—'}));
-    if(force||!cal||Date.now()-calAt>12e4)jobs.push(loadCal().catch(()=>{}));
-    await Promise.all(jobs);
-    if(cal||ev.length)graph();else if(first)S.textContent='Contribution graph is unavailable right now. Open my GitHub profile to see it.';
-    latest()}
-  finally{busy=false;status()}}
-const RN=document.getElementById('repoN');let shownRepos=null,rt=null;
-function setRepos(n){if(n===shownRepos)return;const from=shownRepos===null?0:shownRepos;shownRepos=n;let i=from;clearInterval(rt);
-  if(i===n){RN.textContent=n;return}
-  rt=setInterval(()=>{i+=n>i?1:-1;RN.textContent=i;if(i===n)clearInterval(rt)},Math.max(18,900/Math.abs(n-from)))}
-try{const c=+localStorage.getItem('gh-repos');if(c)setRepos(c)}catch(_){}
-refresh();
-setInterval(()=>{if(document.visibilityState==='visible')refresh()},12e4);
-setInterval(status,3e4);
-document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')refresh()});
-R.addEventListener('click',async()=>{R.disabled=true;R.textContent='Refreshing…';await refresh(true);R.disabled=false;R.textContent='Refresh'});
-})();
 </script>
 </body>
 </html>
