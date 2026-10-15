@@ -250,6 +250,64 @@ body.light .card{box-shadow:var(--sh),inset 0 1px 0 #fff}
   .tcell:nth-child(n){border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
   .tcell:nth-child(3n){border-right:0}.tcell:nth-last-child(-n+3){border-bottom:0}
   .tcell{min-height:140px;padding-top:26px;gap:14px}.tcell span{font-size:11px;letter-spacing:.06em}}
+
+/* ===== Mobile spacing & responsive fixes ===== */
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr))}
+
+@media(max-width:900px){
+  section{padding:64px 0}
+  .hero{min-height:auto;align-items:flex-start;padding:96px 0 40px}
+  .hero .wrap{gap:32px}
+  .rv{transform:translateY(16px)}
+}
+
+@media(max-width:600px){
+  .wrap{padding:0 18px}
+  section,#skills{padding:48px 0}
+  #services{padding-top:8px!important}
+  h2{margin-bottom:8px}
+  h2::after{margin-top:10px}
+
+  nav .wrap{height:58px}
+  nav ul{top:58px}
+
+  .hero{padding:80px 0 32px}
+  .pill{margin-bottom:16px;font-size:12px;padding:6px 12px}
+  .hero h1{font-size:clamp(34px,10.5vw,46px)}
+  .role{margin-top:10px}
+  .meta{margin-top:10px;font-size:14px}
+  .d{margin-top:14px;font-size:15px}
+  .cta{margin-top:22px}
+  .cta .btn{flex:1 1 100%}
+
+  .hv{padding:14px 0}
+  .hc{padding:20px}
+  .hh{padding-bottom:14px}
+  .fc{font-size:12px;padding:6px 11px}
+  .fc.t{right:12px}.fc.b{left:12px}
+
+  .mq{padding:10px 0}
+  .grid{gap:16px;margin-top:26px}
+  .about{gap:24px;margin-top:22px}
+  .stats{grid-template-columns:repeat(3,1fr);gap:10px}
+  .stat{flex-direction:column;text-align:center;gap:2px;padding:14px 8px;font-size:12px}
+  .stat strong{font-size:30px;min-width:0}
+
+  .techw{gap:22px}
+  .techh h2{margin:12px 0 12px}
+  .tcell{min-height:116px;padding-top:20px;gap:12px}
+  .tcell i{font-size:32px}
+
+  .sk,.svc{padding:20px}
+  .pb{padding:18px}
+  .tags{margin:12px 0 16px}
+  .ti{padding:14px 16px}
+  .ct{padding:16px;margin-top:24px}
+  .row{padding:10px 12px;gap:10px}
+  footer{padding:22px 0}
+  .up{right:14px;bottom:14px;width:42px;height:42px}
+}
 </style>
 </head>
 <body class="lock">
